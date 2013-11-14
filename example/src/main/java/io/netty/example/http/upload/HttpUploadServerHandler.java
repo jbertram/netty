@@ -286,9 +286,9 @@ public class HttpUploadServerHandler extends SimpleChannelInboundHandler<HttpObj
         responseContent.setLength(0);
 
         // Decide whether to close the connection or not.
-        boolean close = HttpHeaders.Values.CLOSE.equalsIgnoreCase(request.headers().get(CONNECTION))
+        boolean close = HttpHeaders.eq(HttpHeaders.Values.CLOSE, request.headers().get(CONNECTION))
                 || request.getProtocolVersion().equals(HttpVersion.HTTP_1_0)
-                && !HttpHeaders.Values.KEEP_ALIVE.equalsIgnoreCase(request.headers().get(CONNECTION));
+                && !HttpHeaders.eq(HttpHeaders.Values.KEEP_ALIVE, request.headers().get(CONNECTION));
 
         // Build the response object.
         FullHttpResponse response = new DefaultFullHttpResponse(

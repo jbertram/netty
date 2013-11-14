@@ -18,6 +18,7 @@ package io.netty.handler.codec.http;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.FileRegion;
+import io.netty.handler.codec.Encodable;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import io.netty.util.CharsetUtil;
 import io.netty.util.internal.StringUtil;
@@ -166,8 +167,12 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
     }
 
     private static void encodeHeaders(ByteBuf buf, HttpHeaders headers) {
-        for (Map.Entry<String, String> h: headers) {
-            encodeHeader(buf, h.getKey(), h.getValue());
+        if (headers instanceof Encodable) {
+            ((Encodable) headers).encode(buf);
+        } else {
+            for (Map.Entry<String, String> h: headers) {
+                encodeHeader(buf, h.getKey(), h.getValue());
+            }
         }
     }
 
@@ -178,10 +183,8 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
         buf.writeBytes(CRLF);
     }
 
-    protected static void encodeAscii(String s, ByteBuf buf) {
-        for (int i = 0; i < s.length(); i++) {
-            buf.writeByte(s.charAt(i));
-        }
+    protected static void encodeAscii(CharSequence s, ByteBuf buf) {
+        HttpHeaders.encodeAscii(s, buf);
     }
 
     protected abstract void encodeInitialLine(ByteBuf buf, H message) throws Exception;

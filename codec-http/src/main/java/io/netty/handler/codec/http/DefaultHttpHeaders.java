@@ -15,6 +15,9 @@
  */
 package io.netty.handler.codec.http;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.handler.codec.Encodable;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,11 +30,16 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class DefaultHttpHeaders extends HttpHeaders {
+import static io.netty.handler.codec.http.HttpConstants.*;
+
+public class DefaultHttpHeaders extends HttpHeaders implements Encodable {
+
+    private static final byte[] HEADER_SEPARATOR = { COLON, SP };
+    private static final byte[] CRLF = { CR, LF };
 
     private static final int BUCKET_SIZE = 17;
 
-    private static int hash(String name) {
+    private static int hash(CharSequence name) {
         int h = 0;
         for (int i = name.length() - 1; i >= 0; i --) {
             char c = name.charAt(i);
@@ -48,30 +56,6 @@ public class DefaultHttpHeaders extends HttpHeaders {
         } else {
             return -h;
         }
-    }
-
-    private static boolean eq(String name1, String name2) {
-        int nameLen = name1.length();
-        if (nameLen != name2.length()) {
-            return false;
-        }
-
-        for (int i = nameLen - 1; i >= 0; i --) {
-            char c1 = name1.charAt(i);
-            char c2 = name2.charAt(i);
-            if (c1 != c2) {
-                if (c1 >= 'A' && c1 <= 'Z') {
-                    c1 += 32;
-                }
-                if (c2 >= 'A' && c2 <= 'Z') {
-                    c2 += 32;
-                }
-                if (c1 != c2) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     private static int index(int hash) {
@@ -91,19 +75,19 @@ public class DefaultHttpHeaders extends HttpHeaders {
         head.before = head.after = head;
     }
 
-    void validateHeaderName0(String headerName) {
+    void validateHeaderName0(CharSequence headerName) {
         validateHeaderName(headerName);
     }
 
     @Override
-    public HttpHeaders add(final String name, final Object value) {
-        String strVal;
+    public HttpHeaders add(final CharSequence name, final Object value) {
+        CharSequence strVal;
         if (validate) {
             validateHeaderName0(name);
-            strVal = toString(value);
+            strVal = toCharsequence(value);
             validateHeaderValue(strVal);
         } else {
-            strVal = toString(value);
+            strVal = toCharsequence(value);
         }
         int h = hash(name);
         int i = index(h);
@@ -112,14 +96,14 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders add(String name, Iterable<?> values) {
+    public HttpHeaders add(CharSequence name, Iterable<?> values) {
         if (validate) {
             validateHeaderName0(name);
         }
         int h = hash(name);
         int i = index(h);
         for (Object v: values) {
-            String vstr = toString(v);
+            CharSequence vstr = toCharsequence(v);
             if (validate) {
                 validateHeaderValue(vstr);
             }
@@ -128,7 +112,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         return this;
     }
 
-    private void add0(int h, int i, final String name, final String value) {
+    private void add0(int h, int i, final CharSequence name, final CharSequence value) {
         // Update the hash table.
         HeaderEntry e = entries[i];
         HeaderEntry newEntry;
@@ -140,7 +124,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders remove(final String name) {
+    public HttpHeaders remove(final CharSequence name) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -150,7 +134,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         return this;
     }
 
-    private void remove0(int h, int i, String name) {
+    private void remove0(int h, int i, CharSequence name) {
         HeaderEntry e = entries[i];
         if (e == null) {
             return;
@@ -187,14 +171,14 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders set(final String name, final Object value) {
-        String strVal;
+    public HttpHeaders set(final CharSequence name, final Object value) {
+        CharSequence strVal;
         if (validate) {
             validateHeaderName0(name);
-            strVal = toString(value);
+            strVal = toCharsequence(value);
             validateHeaderValue(strVal);
         } else {
-            strVal = toString(value);
+            strVal = toCharsequence(value);
         }
         int h = hash(name);
         int i = index(h);
@@ -204,7 +188,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders set(final String name, final Iterable<?> values) {
+    public HttpHeaders set(final CharSequence name, final Iterable<?> values) {
         if (values == null) {
             throw new NullPointerException("values");
         }
@@ -220,7 +204,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
             if (v == null) {
                 break;
             }
-            String strVal = toString(v);
+            CharSequence strVal = toCharsequence(v);
             if (validate) {
                 validateHeaderValue(strVal);
             }
@@ -238,7 +222,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public String get(final String name) {
+    public String get(final CharSequence name) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -250,7 +234,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         // loop until the first header was found
         while (e != null) {
             if (e.hash == h && eq(name, e.key)) {
-                value = e.value;
+                value = e.value.toString();
             }
 
             e = e.next;
@@ -259,7 +243,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public List<String> getAll(final String name) {
+    public List<String> getAll(final CharSequence name) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -271,7 +255,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         HeaderEntry e = entries[i];
         while (e != null) {
             if (e.hash == h && eq(name, e.key)) {
-                values.addFirst(e.value);
+                values.addFirst(e.value.toString());
             }
             e = e.next;
         }
@@ -297,7 +281,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public boolean contains(String name) {
+    public boolean contains(CharSequence name) {
         return get(name) != null;
     }
 
@@ -307,7 +291,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public boolean contains(String name, String value, boolean ignoreCaseValue) {
+    public boolean contains(CharSequence name, CharSequence value, boolean ignoreCaseValue) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -318,7 +302,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         while (e != null) {
             if (e.hash == h && eq(name, e.key)) {
                 if (ignoreCaseValue) {
-                    if (e.value.equalsIgnoreCase(value)) {
+                    if (eq(e.value, value)) {
                         return true;
                     }
                 } else {
@@ -339,18 +323,30 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
         HeaderEntry e = head.after;
         while (e != head) {
-            names.add(e.key);
+            names.add(e.key.toString());
             e = e.after;
         }
         return names;
     }
 
-    private static String toString(Object value) {
+    @Override
+    public void encode(ByteBuf buf) {
+        HeaderEntry e = head.after;
+        while (e != head) {
+            encodeAscii(e.key, buf);
+            buf.writeBytes(HEADER_SEPARATOR);
+            encodeAscii(e.value, buf);
+            buf.writeBytes(CRLF);
+            e = e.after;
+        }
+    }
+
+    private static CharSequence toCharsequence(Object value) {
         if (value == null) {
             return null;
         }
-        if (value instanceof String) {
-            return (String) value;
+        if (value instanceof CharSequence) {
+            return (CharSequence) value;
         }
         if (value instanceof Number) {
             return value.toString();
@@ -392,12 +388,12 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
     private final class HeaderEntry implements Map.Entry<String, String> {
         final int hash;
-        final String key;
-        String value;
+        final CharSequence key;
+        CharSequence value;
         HeaderEntry next;
         HeaderEntry before, after;
 
-        HeaderEntry(int hash, String key, String value) {
+        HeaderEntry(int hash, CharSequence key, CharSequence value) {
             this.hash = hash;
             this.key = key;
             this.value = value;
@@ -417,12 +413,12 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
         @Override
         public String getKey() {
-            return key;
+            return key.toString();
         }
 
         @Override
         public String getValue() {
-            return value;
+            return value.toString();
         }
 
         @Override
@@ -431,14 +427,14 @@ public class DefaultHttpHeaders extends HttpHeaders {
                 throw new NullPointerException("value");
             }
             validateHeaderValue(value);
-            String oldValue = this.value;
+            String oldValue = this.value.toString();
             this.value = value;
             return oldValue;
         }
 
         @Override
         public String toString() {
-            return key + '=' + value;
+            return key.toString() + '=' + value.toString();
         }
     }
 }

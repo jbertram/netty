@@ -129,7 +129,7 @@ public class WebSocketClientHandshaker13 extends WebSocketClientHandshaker {
         FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, path);
         HttpHeaders headers = request.headers();
 
-        headers.add(Names.UPGRADE, Values.WEBSOCKET.toLowerCase())
+        headers.add(Names.UPGRADE, Values.WEBSOCKET.toString().toLowerCase())
                .add(Names.CONNECTION, Values.UPGRADE)
                .add(Names.SEC_WEBSOCKET_KEY, key)
                .add(Names.HOST, wsURL.getHost() + ':' + wsPort);
@@ -182,12 +182,12 @@ public class WebSocketClientHandshaker13 extends WebSocketClientHandshaker {
         }
 
         String upgrade = headers.get(Names.UPGRADE);
-        if (!Values.WEBSOCKET.equalsIgnoreCase(upgrade)) {
+        if (!HttpHeaders.eq(Values.WEBSOCKET, upgrade)) {
             throw new WebSocketHandshakeException("Invalid handshake response upgrade: " + upgrade);
         }
 
         String connection = headers.get(Names.CONNECTION);
-        if (!Values.UPGRADE.equalsIgnoreCase(connection)) {
+        if (!HttpHeaders.eq(Values.UPGRADE, connection)) {
             throw new WebSocketHandshakeException("Invalid handshake response connection: " + connection);
         }
 
