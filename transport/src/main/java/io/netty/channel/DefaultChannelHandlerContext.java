@@ -26,6 +26,10 @@ import java.util.WeakHashMap;
 
 final class DefaultChannelHandlerContext extends DefaultAttributeMap implements ChannelHandlerContext {
 
+    // This class keeps an integer member field 'skipFlags' whose each bit tells if the corresponding handler method
+    // is annotated with @Skip. 'skipFlags' is retrieved in runtime via the reflection API and is cached.
+    // The following constants signify which bit of 'skipFlags' corresponds to which handler method:
+
     static final int MASK_HANDLER_ADDED = 1;
     static final int MASK_HANDLER_REMOVED = 1 << 1;
     private static final int MASK_EXCEPTION_CAUGHT = 1 << 2;
@@ -44,6 +48,10 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
     private static final int MASK_WRITE = 1 << 15;
     private static final int MASK_FLUSH = 1 << 16;
 
+    /**
+     * Cache the result of the costly generation of {@link #skipFlags} in the partitioned synchronized
+     * {@link WeakHashMap}.
+     */
     @SuppressWarnings("unchecked")
     private static final WeakHashMap<Class<?>, Integer>[] skipFlagsCache =
             new WeakHashMap[Runtime.getRuntime().availableProcessors()];
@@ -54,6 +62,11 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
         }
     }
 
+    /**
+     * Returns an integer bitset that tells which handler methods were annotated with {@link Skip}.
+     * It gets the value from {@link #skipFlagsCache} if an handler of the same type were queried before.
+     * Otherwise, it delegates to {@link #skipFlags0(Class)} to get it.
+     */
     private static int skipFlags(ChannelHandler handler) {
         WeakHashMap<Class<?>, Integer> cache =
                 skipFlagsCache[(int) (Thread.currentThread().getId() % skipFlagsCache.length)];
@@ -72,6 +85,9 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
         return flagsVal;
     }
 
+    /**
+     * Determines the {@link #skipFlags} of the specified {@code handlerType} using the reflection API.
+     */
     private static int skipFlags0(Class<? extends ChannelHandler> handlerType) {
         int flags = 0;
         try {
@@ -147,6 +163,7 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
                 flags |= MASK_FLUSH;
             }
         } catch (Exception e) {
+            // Should never reach here.
             PlatformDependent.throwException(e);
         }
 
