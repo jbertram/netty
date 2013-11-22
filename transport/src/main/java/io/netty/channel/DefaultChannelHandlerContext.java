@@ -84,8 +84,7 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
                 flags |= MASK_HANDLER_REMOVED;
             }
             if (handlerType.getMethod(
-                    "exceptionCaught", ChannelHandlerContext.class,
-                    Throwable.class).isAnnotationPresent(Skip.class)) {
+                    "exceptionCaught", ChannelHandlerContext.class, Throwable.class).isAnnotationPresent(Skip.class)) {
                 flags |= MASK_EXCEPTION_CAUGHT;
             }
             if (handlerType.getMethod(
@@ -113,8 +112,7 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
                 flags |= MASK_CHANNEL_WRITABILITY_CHANGED;
             }
             if (handlerType.getMethod(
-                    "userEventTriggered", ChannelHandlerContext.class,
-                    Object.class).isAnnotationPresent(Skip.class)) {
+                    "userEventTriggered", ChannelHandlerContext.class, Object.class).isAnnotationPresent(Skip.class)) {
                 flags |= MASK_USER_EVENT_TRIGGERED;
             }
             if (handlerType.getMethod(
@@ -128,13 +126,11 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
                 flags |= MASK_CONNECT;
             }
             if (handlerType.getMethod(
-                    "disconnect", ChannelHandlerContext.class,
-                    ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                    "disconnect", ChannelHandlerContext.class, ChannelPromise.class).isAnnotationPresent(Skip.class)) {
                 flags |= MASK_DISCONNECT;
             }
             if (handlerType.getMethod(
-                    "close", ChannelHandlerContext.class,
-                    ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                    "close", ChannelHandlerContext.class, ChannelPromise.class).isAnnotationPresent(Skip.class)) {
                 flags |= MASK_CLOSE;
             }
             if (handlerType.getMethod(
