@@ -529,7 +529,11 @@ final class DefaultChannelPipeline implements ChannelPipeline {
         }
     }
 
-    private void callHandlerAdded(final ChannelHandlerContext ctx) {
+    private void callHandlerAdded(final DefaultChannelHandlerContext ctx) {
+        if ((ctx.skipFlags & DefaultChannelHandlerContext.MASK_HANDLER_ADDED) != 0) {
+            return;
+        }
+
         if (ctx.channel().isRegistered() && !ctx.executor().inEventLoop()) {
             ctx.executor().execute(new Runnable() {
                 @Override
@@ -542,13 +546,13 @@ final class DefaultChannelPipeline implements ChannelPipeline {
         callHandlerAdded0(ctx);
     }
 
-    private void callHandlerAdded0(final ChannelHandlerContext ctx) {
+    private void callHandlerAdded0(final DefaultChannelHandlerContext ctx) {
         try {
             ctx.handler().handlerAdded(ctx);
         } catch (Throwable t) {
             boolean removed = false;
             try {
-                remove((DefaultChannelHandlerContext) ctx);
+                remove(ctx);
                 removed = true;
             } catch (Throwable t2) {
                 if (logger.isWarnEnabled()) {
@@ -569,6 +573,10 @@ final class DefaultChannelPipeline implements ChannelPipeline {
     }
 
     private void callHandlerRemoved(final DefaultChannelHandlerContext ctx) {
+        if ((ctx.skipFlags & DefaultChannelHandlerContext.MASK_HANDLER_REMOVED) != 0) {
+            return;
+        }
+
         if (ctx.channel().isRegistered() && !ctx.executor().inEventLoop()) {
             ctx.executor().execute(new Runnable() {
                 @Override

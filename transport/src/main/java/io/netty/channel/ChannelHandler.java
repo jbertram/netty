@@ -331,27 +331,39 @@ public interface ChannelHandler {
     }
 
     /**
-     * Indicates that the annotated event handler methods in {@link ChannelHandler} will not be invoked while
-     * they traverses through the {@link ChannelPipeline}.  This annotation is only useful when your handler method
-     * implementation simply passes the event through to the next handler, like the following:
+     * Indicates that the annotated event handler method in {@link ChannelHandler} will not be invoked by
+     * {@link ChannelPipeline}.  This annotation is only useful when your handler method implementation
+     * only passes the event through to the next handler, like the following:
      *
      * <pre>
+     * {@code @Skip}
      * {@code @Override}
-     * {@code @Passthrough}
-     * public void channelActive(ChannelHandlerContext ctx) {
-     *     ctx.fireChannelActive(); // pass through to the next handler
-     * }</pre>
+     * public void channelActive({@link ChannelHandlerContext} ctx) {
+     *     ctx.fireChannelActive(); // do nothing but passing through to the next handler
+     * }
+     * </pre>
+     *
+     * {@link #handlerAdded(ChannelHandlerContext)} and {@link #handlerRemoved(ChannelHandlerContext)} are not able to
+     * pass the event through to the next handler, so they must do nothing when annotated.
+     *
+     * <pre>
+     * {@code @Skip}
+     * {@code @Override}
+     * public void handlerAdded({@link ChannelHandlerContext} ctx) {
+     *     // do nothing
+     * }
+     * </pre>
      *
      * <p>
      * Note that this annotation is not {@linkplain Inherited inherited}.  If you override a method annotated with
-     * {@link Passthrough}, it will not be skipped anymore.  Similarly, you can override a method not annotated with
-     * {@link Passthrough} and simply pass the event through to the next handler, which reverses the behavior of the
+     * {@link Skip}, it will not be skipped anymore.  Similarly, you can override a method not annotated with
+     * {@link Skip} and simply pass the event through to the next handler, which reverses the behavior of the
      * supertype.
      * </p>
      */
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
-    @interface Passthrough {
+    @interface Skip {
         // no value
     }
 }

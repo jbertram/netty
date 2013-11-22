@@ -37,8 +37,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
     /**
      * Do nothing by default, sub-classes may override this method.
      */
+    @Skip
     @Override
-    @Passthrough
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         // NOOP
     }
@@ -46,8 +46,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
     /**
      * Do nothing by default, sub-classes may override this method.
      */
+    @Skip
     @Override
-    @Passthrough
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         // NOOP
     }
@@ -58,8 +58,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         ctx.fireExceptionCaught(cause);
     }
@@ -70,8 +70,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
         ctx.fireChannelRegistered();
     }
@@ -82,8 +82,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         ctx.fireChannelActive();
     }
@@ -94,8 +94,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         ctx.fireChannelInactive();
     }
@@ -106,8 +106,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ctx.fireChannelRead(msg);
     }
@@ -118,8 +118,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.fireChannelReadComplete();
     }
@@ -130,8 +130,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         ctx.fireUserEventTriggered(evt);
     }
@@ -142,8 +142,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
         ctx.fireChannelWritabilityChanged();
     }
@@ -154,8 +154,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void bind(ChannelHandlerContext ctx, SocketAddress localAddress, ChannelPromise promise) throws Exception {
         ctx.bind(localAddress, promise);
     }
@@ -166,8 +166,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void connect(
             ChannelHandlerContext ctx,
             SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise promise) throws Exception {
@@ -180,8 +180,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
         ctx.disconnect(promise);
     }
@@ -192,8 +192,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
         ctx.close(promise);
     }
@@ -204,8 +204,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void read(ChannelHandlerContext ctx) throws Exception {
         ctx.read();
     }
@@ -216,8 +216,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
         ctx.write(msg, promise);
     }
@@ -228,8 +228,8 @@ public class ChannelHandlerAdapter implements ChannelHandler {
      *
      * Sub-classes may override this method to change behavior.
      */
+    @Skip
     @Override
-    @Passthrough
     public void flush(ChannelHandlerContext ctx) throws Exception {
         ctx.flush();
     }

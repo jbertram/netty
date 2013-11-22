@@ -16,7 +16,7 @@
 package io.netty.channel;
 
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.channel.ChannelHandler.Passthrough;
+import io.netty.channel.ChannelHandler.Skip;
 import io.netty.util.DefaultAttributeMap;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.internal.PlatformDependent;
@@ -26,8 +26,8 @@ import java.util.WeakHashMap;
 
 final class DefaultChannelHandlerContext extends DefaultAttributeMap implements ChannelHandlerContext {
 
-    private static final int MASK_HANDLER_ADDED = 1;
-    private static final int MASK_HANDLER_REMOVED = 1 << 1;
+    static final int MASK_HANDLER_ADDED = 1;
+    static final int MASK_HANDLER_REMOVED = 1 << 1;
     private static final int MASK_EXCEPTION_CAUGHT = 1 << 2;
     private static final int MASK_CHANNEL_REGISTERED = 1 << 3;
     private static final int MASK_CHANNEL_ACTIVE = 1 << 4;
@@ -45,116 +45,116 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
     private static final int MASK_FLUSH = 1 << 16;
 
     @SuppressWarnings("unchecked")
-    private static final WeakHashMap<Class<?>, Integer>[] passthroughMaskCache =
+    private static final WeakHashMap<Class<?>, Integer>[] skipFlagsCache =
             new WeakHashMap[Runtime.getRuntime().availableProcessors()];
 
     static {
-        for (int i = 0; i < passthroughMaskCache.length; i ++) {
-            passthroughMaskCache[i] = new WeakHashMap<Class<?>, Integer>();
+        for (int i = 0; i < skipFlagsCache.length; i ++) {
+            skipFlagsCache[i] = new WeakHashMap<Class<?>, Integer>();
         }
     }
 
-    private static int passthroughMask(ChannelHandler handler) {
+    private static int skipFlags(ChannelHandler handler) {
         WeakHashMap<Class<?>, Integer> cache =
-                passthroughMaskCache[(int) (Thread.currentThread().getId() % passthroughMaskCache.length)];
+                skipFlagsCache[(int) (Thread.currentThread().getId() % skipFlagsCache.length)];
         Class<? extends ChannelHandler> handlerType = handler.getClass();
-        int maskVal;
+        int flagsVal;
         synchronized (cache) {
-            Integer mask = cache.get(handlerType);
-            if (mask != null) {
-                maskVal = mask;
+            Integer flags = cache.get(handlerType);
+            if (flags != null) {
+                flagsVal = flags;
             } else {
-                maskVal = passthroughMask0(handlerType);
-                cache.put(handlerType, Integer.valueOf(maskVal));
+                flagsVal = skipFlags0(handlerType);
+                cache.put(handlerType, Integer.valueOf(flagsVal));
             }
         }
 
-        return maskVal;
+        return flagsVal;
     }
 
-    private static int passthroughMask0(Class<? extends ChannelHandler> handlerType) {
-        int mask = 0;
+    private static int skipFlags0(Class<? extends ChannelHandler> handlerType) {
+        int flags = 0;
         try {
             if (handlerType.getMethod(
-                    "handlerAdded", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    "handlerAdded", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
-                    "handlerRemoved", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_REMOVED;
+                    "handlerRemoved", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_REMOVED;
             }
             if (handlerType.getMethod(
                     "exceptionCaught", ChannelHandlerContext.class,
-                    Throwable.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_EXCEPTION_CAUGHT;
+                    Throwable.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_EXCEPTION_CAUGHT;
             }
             if (handlerType.getMethod(
-                    "channelRegistered", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_CHANNEL_REGISTERED;
+                    "channelRegistered", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_CHANNEL_REGISTERED;
             }
             if (handlerType.getMethod(
-                    "channelActive", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_CHANNEL_ACTIVE;
+                    "channelActive", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_CHANNEL_ACTIVE;
             }
             if (handlerType.getMethod(
-                    "channelInactive", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_CHANNEL_INACTIVE;
+                    "channelInactive", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_CHANNEL_INACTIVE;
             }
             if (handlerType.getMethod(
-                    "channelRead", ChannelHandlerContext.class, Object.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_CHANNEL_READ;
+                    "channelRead", ChannelHandlerContext.class, Object.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_CHANNEL_READ;
             }
             if (handlerType.getMethod(
-                    "channelReadComplete", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_CHANNEL_READ_COMPLETE;
+                    "channelReadComplete", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_CHANNEL_READ_COMPLETE;
             }
             if (handlerType.getMethod(
-                    "channelWritabilityChanged", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_CHANNEL_WRITABILITY_CHANGED;
+                    "channelWritabilityChanged", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_CHANNEL_WRITABILITY_CHANGED;
             }
             if (handlerType.getMethod(
                     "userEventTriggered", ChannelHandlerContext.class,
-                    Object.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_USER_EVENT_TRIGGERED;
+                    Object.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_USER_EVENT_TRIGGERED;
             }
             if (handlerType.getMethod(
                     "bind", ChannelHandlerContext.class,
-                    SocketAddress.class, ChannelPromise.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    SocketAddress.class, ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
                     "connect", ChannelHandlerContext.class, SocketAddress.class, SocketAddress.class,
-                    ChannelPromise.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
                     "disconnect", ChannelHandlerContext.class,
-                    ChannelPromise.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
                     "close", ChannelHandlerContext.class,
-                    ChannelPromise.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
-                    "read", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    "read", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
                     "write", ChannelHandlerContext.class,
-                    Object.class, ChannelPromise.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    Object.class, ChannelPromise.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
             if (handlerType.getMethod(
-                    "flush", ChannelHandlerContext.class).isAnnotationPresent(Passthrough.class)) {
-                mask |= MASK_HANDLER_ADDED;
+                    "flush", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
+                flags |= MASK_HANDLER_ADDED;
             }
         } catch (Exception e) {
             PlatformDependent.throwException(e);
         }
 
-        return mask;
+        return flags;
     }
 
     volatile DefaultChannelHandlerContext next;
@@ -164,8 +164,9 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
     private final DefaultChannelPipeline pipeline;
     private final String name;
     private final ChannelHandler handler;
-    private final int passthroughMask;
     private boolean removed;
+
+    final int skipFlags;
 
     // Will be set to null if no child executor should be used, otherwise it will be set to the
     // child executor.
@@ -193,7 +194,7 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
         this.name = name;
         this.handler = handler;
 
-        passthroughMask = passthroughMask(handler);
+        skipFlags = skipFlags(handler);
 
         if (invoker == null) {
             this.invoker = channel.unsafe().invoker();
@@ -449,7 +450,7 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
         DefaultChannelHandlerContext ctx = this;
         do {
             ctx = ctx.next;
-        } while ((ctx.passthroughMask & mask) != 0);
+        } while ((ctx.skipFlags & mask) != 0);
         return ctx;
     }
 
@@ -457,7 +458,7 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
         DefaultChannelHandlerContext ctx = this;
         do {
             ctx = ctx.prev;
-        } while ((ctx.passthroughMask & mask) != 0);
+        } while ((ctx.skipFlags & mask) != 0);
         return ctx;
     }
 
