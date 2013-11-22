@@ -119,6 +119,7 @@ public class ChannelHandlerAppender extends ChannelHandlerAdapter {
      * @throws IllegalStateException if initialized already
      */
     protected final void init(ChannelHandler... handlers) {
+        checkUninitialized();
         if (handlers == null) {
             throw new NullPointerException("handlers");
         }
