@@ -120,35 +120,35 @@ final class DefaultChannelHandlerContext extends DefaultAttributeMap implements 
             if (handlerType.getMethod(
                     "bind", ChannelHandlerContext.class,
                     SocketAddress.class, ChannelPromise.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_BIND;
             }
             if (handlerType.getMethod(
                     "connect", ChannelHandlerContext.class, SocketAddress.class, SocketAddress.class,
                     ChannelPromise.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_CONNECT;
             }
             if (handlerType.getMethod(
                     "disconnect", ChannelHandlerContext.class,
                     ChannelPromise.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_DISCONNECT;
             }
             if (handlerType.getMethod(
                     "close", ChannelHandlerContext.class,
                     ChannelPromise.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_CLOSE;
             }
             if (handlerType.getMethod(
                     "read", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_READ;
             }
             if (handlerType.getMethod(
                     "write", ChannelHandlerContext.class,
                     Object.class, ChannelPromise.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_WRITE;
             }
             if (handlerType.getMethod(
                     "flush", ChannelHandlerContext.class).isAnnotationPresent(Skip.class)) {
-                flags |= MASK_HANDLER_ADDED;
+                flags |= MASK_FLUSH;
             }
         } catch (Exception e) {
             PlatformDependent.throwException(e);
