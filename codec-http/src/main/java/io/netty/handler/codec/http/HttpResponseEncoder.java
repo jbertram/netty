@@ -34,11 +34,11 @@ public class HttpResponseEncoder extends HttpObjectEncoder<HttpResponse> {
 
     @Override
     protected void encodeInitialLine(ByteBuf buf, HttpResponse response) throws Exception {
-        encodeAscii(response.getProtocolVersion().toString(), buf);
+        HttpHeaders.encodeAscii(response.getProtocolVersion().toString(), buf);
         buf.writeByte(SP);
-        encodeAscii(String.valueOf(response.getStatus().code()), buf);
+        HttpHeaders.encodeAscii(String.valueOf(response.getStatus().code()), buf);
         buf.writeByte(SP);
-        encodeAscii(String.valueOf(response.getStatus().reasonPhrase()), buf);
+        HttpHeaders.encodeAscii(String.valueOf(response.getStatus().reasonPhrase()), buf);
         buf.writeBytes(CRLF);
     }
 }

@@ -15,7 +15,7 @@
  */
 package io.netty.handler.codec.rtsp;
 
-import io.netty.handler.codec.http.HttpHeaderName;
+import io.netty.handler.codec.http.HttpHeaderCharsequence;
 import io.netty.handler.codec.http.HttpHeaders;
 
 
@@ -43,7 +43,7 @@ public final class RtspHeaders {
         /**
          * {@code "Allow"}
          */
-        public static final CharSequence ALLOW = new HttpHeaderName("Allow");
+        public static final CharSequence ALLOW = new HttpHeaderCharsequence("Allow");
         /**
          * {@code "Authorization"}
          */
@@ -51,11 +51,11 @@ public final class RtspHeaders {
         /**
          * {@code "Bandwidth"}
          */
-        public static final CharSequence BANDWIDTH = new HttpHeaderName("Bandwidth");
+        public static final CharSequence BANDWIDTH = new HttpHeaderCharsequence("Bandwidth");
         /**
          * {@code "Blocksize"}
          */
-        public static final CharSequence BLOCKSIZE = new HttpHeaderName("Blocksize");
+        public static final CharSequence BLOCKSIZE = new HttpHeaderCharsequence("Blocksize");
         /**
          * {@code "Cache-Control"}
          */
@@ -63,7 +63,7 @@ public final class RtspHeaders {
         /**
          * {@code "Conference"}
          */
-        public static final CharSequence CONFERENCE = new HttpHeaderName("Conference");
+        public static final CharSequence CONFERENCE = new HttpHeaderCharsequence("Conference");
         /**
          * {@code "Connection"}
          */
@@ -95,7 +95,7 @@ public final class RtspHeaders {
         /**
          * {@code "CSeq"}
          */
-        public static final CharSequence CSEQ = new HttpHeaderName("CSeq");
+        public static final CharSequence CSEQ = new HttpHeaderCharsequence("CSeq");
         /**
          * {@code "Date"}
          */
@@ -123,7 +123,7 @@ public final class RtspHeaders {
         /**
          * {@code "KeyMgmt"}
          */
-        public static final CharSequence KEYMGMT = new HttpHeaderName("KeyMgmt");
+        public static final CharSequence KEYMGMT = new HttpHeaderCharsequence("KeyMgmt");
         /**
          * {@code "Last-Modified"}
          */
@@ -135,11 +135,11 @@ public final class RtspHeaders {
         /**
          * {@code "Proxy-Require"}
          */
-        public static final CharSequence PROXY_REQUIRE = new HttpHeaderName("Proxy-Require");
+        public static final CharSequence PROXY_REQUIRE = new HttpHeaderCharsequence("Proxy-Require");
         /**
          * {@code "Public"}
          */
-        public static final CharSequence PUBLIC = new HttpHeaderName("Public");
+        public static final CharSequence PUBLIC = new HttpHeaderCharsequence("Public");
         /**
          * {@code "Range"}
          */
@@ -151,7 +151,7 @@ public final class RtspHeaders {
         /**
          * {@code "Require"}
          */
-        public static final CharSequence REQUIRE = new HttpHeaderName("Require");
+        public static final CharSequence REQUIRE = new HttpHeaderCharsequence("Require");
         /**
          * {@code "Retry-After"}
          */
@@ -159,15 +159,15 @@ public final class RtspHeaders {
         /**
          * {@code "RTP-Info"}
          */
-        public static final CharSequence RTP_INFO = new HttpHeaderName("RTP-Info");
+        public static final CharSequence RTP_INFO = new HttpHeaderCharsequence("RTP-Info");
         /**
          * {@code "Scale"}
          */
-        public static final CharSequence SCALE = new HttpHeaderName("Scale");
+        public static final CharSequence SCALE = new HttpHeaderCharsequence("Scale");
         /**
          * {@code "Session"}
          */
-        public static final CharSequence SESSION = new HttpHeaderName("Session");
+        public static final CharSequence SESSION = new HttpHeaderCharsequence("Session");
         /**
          * {@code "Server"}
          */
@@ -175,19 +175,19 @@ public final class RtspHeaders {
         /**
          * {@code "Speed"}
          */
-        public static final CharSequence SPEED = new HttpHeaderName("Speed");
+        public static final CharSequence SPEED = new HttpHeaderCharsequence("Speed");
         /**
          * {@code "Timestamp"}
          */
-        public static final CharSequence TIMESTAMP = new HttpHeaderName("Timestamp");
+        public static final CharSequence TIMESTAMP = new HttpHeaderCharsequence("Timestamp");
         /**
          * {@code "Transport"}
          */
-        public static final CharSequence TRANSPORT = new HttpHeaderName("Transport");
+        public static final CharSequence TRANSPORT = new HttpHeaderCharsequence("Transport");
         /**
          * {@code "Unsupported"}
          */
-        public static final CharSequence UNSUPPORTED = new HttpHeaderName("Unsupported");
+        public static final CharSequence UNSUPPORTED = new HttpHeaderCharsequence("Unsupported");
         /**
          * {@code "User-Agent"}
          */

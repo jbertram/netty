@@ -15,6 +15,8 @@
  */
 package io.netty.handler.codec.http;
 
+import io.netty.buffer.ByteBuf;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -203,7 +205,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         int h = hash(name);
         int i = index(h);
         HeaderEntry e = entries[i];
-        String value = null;
+        CharSequence value = null;
         // loop until the first header was found
         while (e != null) {
             if (e.hash == h && equalsIgnoreCase(name, e.key)) {
@@ -212,7 +214,10 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
             e = e.next;
         }
-        return value;
+        if (value != null) {
+            return value.toString();
+        }
+        return null;
     }
 
     @Override
@@ -228,7 +233,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         HeaderEntry e = entries[i];
         while (e != null) {
             if (e.hash == h && equalsIgnoreCase(name, e.key)) {
-                values.addFirst(e.value);
+                values.addFirst(e.getValue());
             }
             e = e.next;
         }
@@ -296,10 +301,18 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
         HeaderEntry e = head.after;
         while (e != head) {
-            names.add(e.key);
+            names.add(e.getKey());
             e = e.after;
         }
         return names;
+    }
+
+    void encode(ByteBuf buf) {
+        HeaderEntry e = head.after;
+        while (e != head) {
+            e.encode(buf);
+            e = e.after;
+        }
     }
 
     private static String toString(Object value) {
@@ -349,14 +362,14 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
     private final class HeaderEntry implements Map.Entry<String, String> {
         final int hash;
-        final String key;
-        String value;
+        final CharSequence key;
+        CharSequence value;
         HeaderEntry next;
         HeaderEntry before, after;
 
-        HeaderEntry(int hash, CharSequence key, String value) {
+        HeaderEntry(int hash, CharSequence key, CharSequence value) {
             this.hash = hash;
-            this.key = key.toString();
+            this.key = key;
             this.value = value;
         }
 
@@ -380,12 +393,12 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
         @Override
         public String getKey() {
-            return key;
+            return key.toString();
         }
 
         @Override
         public String getValue() {
-            return value;
+            return value.toString();
         }
 
         @Override
@@ -394,14 +407,18 @@ public class DefaultHttpHeaders extends HttpHeaders {
                 throw new NullPointerException("value");
             }
             validateHeaderValue(value);
-            String oldValue = this.value;
+            CharSequence oldValue = this.value;
             this.value = value;
-            return oldValue;
+            return oldValue.toString();
         }
 
         @Override
         public String toString() {
-            return key + '=' + value;
+            return key.toString() + '=' + value.toString();
+        }
+
+        void encode(ByteBuf buf) {
+            HttpHeaders.encode(key, value, buf);
         }
     }
 }

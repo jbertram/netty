@@ -15,6 +15,8 @@
  */
 package io.netty.handler.codec.http;
 
+import io.netty.buffer.ByteBuf;
+
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Collections;
@@ -25,12 +27,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import static io.netty.handler.codec.http.HttpConstants.CR;
+import static io.netty.handler.codec.http.HttpConstants.LF;
+
 
 /**
  * Provides the constants for the standard HTTP header names and values and
  * commonly used utility methods that accesses an {@link HttpMessage}.
  */
 public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>> {
+
+    private static final byte[] HEADER_SEPERATOR = { HttpConstants.COLON, HttpConstants.SP };
+    private static final byte[] CRLF = { CR, LF };
 
     public static final HttpHeaders EMPTY_HEADERS = new HttpHeaders() {
         @Override
@@ -106,302 +114,303 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
         /**
          * {@code "Accept"}
          */
-        public static final CharSequence ACCEPT = new HttpHeaderName("Accept");
+        public static final CharSequence ACCEPT = new HttpHeaderCharsequence("Accept");
         /**
          * {@code "Accept-Charset"}
          */
-        public static final CharSequence ACCEPT_CHARSET = new HttpHeaderName("Accept-Charset");
+        public static final CharSequence ACCEPT_CHARSET = new HttpHeaderCharsequence("Accept-Charset");
         /**
          * {@code "Accept-Encoding"}
          */
-        public static final CharSequence ACCEPT_ENCODING = new HttpHeaderName("Accept-Encoding");
+        public static final CharSequence ACCEPT_ENCODING = new HttpHeaderCharsequence("Accept-Encoding");
         /**
          * {@code "Accept-Language"}
          */
-        public static final CharSequence ACCEPT_LANGUAGE = new HttpHeaderName("Accept-Language");
+        public static final CharSequence ACCEPT_LANGUAGE = new HttpHeaderCharsequence("Accept-Language");
         /**
          * {@code "Accept-Ranges"}
          */
-        public static final CharSequence ACCEPT_RANGES = new HttpHeaderName("Accept-Ranges");
+        public static final CharSequence ACCEPT_RANGES = new HttpHeaderCharsequence("Accept-Ranges");
         /**
          * {@code "Accept-Patch"}
          */
-        public static final CharSequence ACCEPT_PATCH = new HttpHeaderName("Accept-Patch");
+        public static final CharSequence ACCEPT_PATCH = new HttpHeaderCharsequence("Accept-Patch");
         /**
          * {@code "Access-Control-Allow-Credentials"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_CREDENTIALS =
-                new HttpHeaderName("Access-Control-Allow-Credentials");
+                new HttpHeaderCharsequence("Access-Control-Allow-Credentials");
         /**
          * {@code "Access-Control-Allow-Headers"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_HEADERS =
-                new HttpHeaderName("Access-Control-Allow-Headers");
+                new HttpHeaderCharsequence("Access-Control-Allow-Headers");
         /**
          * {@code "Access-Control-Allow-Methods"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_METHODS =
-                new HttpHeaderName("Access-Control-Allow-Methods");
+                new HttpHeaderCharsequence("Access-Control-Allow-Methods");
         /**
          * {@code "Access-Control-Allow-Origin"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_ORIGIN =
-                new HttpHeaderName("Access-Control-Allow-Origin");
+                new HttpHeaderCharsequence("Access-Control-Allow-Origin");
         /**
          * {@code "Access-Control-Expose-Headers"}
          */
         public static final CharSequence ACCESS_CONTROL_EXPOSE_HEADERS =
-                new HttpHeaderName("Access-Control-Expose-Headers");
+                new HttpHeaderCharsequence("Access-Control-Expose-Headers");
         /**
          * {@code "Access-Control-Max-Age"}
          */
-        public static final CharSequence ACCESS_CONTROL_MAX_AGE = new HttpHeaderName("Access-Control-Max-Age");
+        public static final CharSequence ACCESS_CONTROL_MAX_AGE = new HttpHeaderCharsequence("Access-Control-Max-Age");
         /**
          * {@code "Access-Control-Request-Headers"}
          */
         public static final CharSequence ACCESS_CONTROL_REQUEST_HEADERS =
-                new HttpHeaderName("Access-Control-Request-Headers");
+                new HttpHeaderCharsequence("Access-Control-Request-Headers");
         /**
          * {@code "Access-Control-Request-Method"}
          */
         public static final CharSequence ACCESS_CONTROL_REQUEST_METHOD =
-                new HttpHeaderName("Access-Control-Request-Method");
+                new HttpHeaderCharsequence("Access-Control-Request-Method");
         /**
          * {@code "Age"}
          */
-        public static final CharSequence AGE = new HttpHeaderName("Age");
+        public static final CharSequence AGE = new HttpHeaderCharsequence("Age");
         /**
          * {@code "Allow"}
          */
-        public static final CharSequence ALLOW = new HttpHeaderName("Allow");
+        public static final CharSequence ALLOW = new HttpHeaderCharsequence("Allow");
         /**
          * {@code "Authorization"}
          */
-        public static final CharSequence AUTHORIZATION = new HttpHeaderName("Authorization");
+        public static final CharSequence AUTHORIZATION = new HttpHeaderCharsequence("Authorization");
         /**
          * {@code "Cache-Control"}
          */
-        public static final CharSequence CACHE_CONTROL = new HttpHeaderName("Cache-Control");
+        public static final CharSequence CACHE_CONTROL = new HttpHeaderCharsequence("Cache-Control");
         /**
          * {@code "Connection"}
          */
-        public static final CharSequence CONNECTION = new HttpHeaderName("Connection");
+        public static final CharSequence CONNECTION = new HttpHeaderCharsequence("Connection");
         /**
          * {@code "Content-Base"}
          */
-        public static final CharSequence CONTENT_BASE = new HttpHeaderName("Content-Base");
+        public static final CharSequence CONTENT_BASE = new HttpHeaderCharsequence("Content-Base");
         /**
          * {@code "Content-Encoding"}
          */
-        public static final CharSequence CONTENT_ENCODING = new HttpHeaderName("Content-Encoding");
+        public static final CharSequence CONTENT_ENCODING = new HttpHeaderCharsequence("Content-Encoding");
         /**
          * {@code "Content-Language"}
          */
-        public static final CharSequence CONTENT_LANGUAGE = new HttpHeaderName("Content-Language");
+        public static final CharSequence CONTENT_LANGUAGE = new HttpHeaderCharsequence("Content-Language");
         /**
          * {@code "Content-Length"}
          */
-        public static final CharSequence CONTENT_LENGTH = new HttpHeaderName("Content-Length");
+        public static final CharSequence CONTENT_LENGTH = new HttpHeaderCharsequence("Content-Length");
         /**
          * {@code "Content-Location"}
          */
-        public static final CharSequence CONTENT_LOCATION = new HttpHeaderName("Content-Location");
+        public static final CharSequence CONTENT_LOCATION = new HttpHeaderCharsequence("Content-Location");
         /**
          * {@code "Content-Transfer-Encoding"}
          */
-        public static final CharSequence CONTENT_TRANSFER_ENCODING = new HttpHeaderName("Content-Transfer-Encoding");
+        public static final CharSequence CONTENT_TRANSFER_ENCODING =
+                new HttpHeaderCharsequence("Content-Transfer-Encoding");
         /**
          * {@code "Content-MD5"}
          */
-        public static final CharSequence CONTENT_MD5 = new HttpHeaderName("Content-MD5");
+        public static final CharSequence CONTENT_MD5 = new HttpHeaderCharsequence("Content-MD5");
         /**
          * {@code "Content-Range"}
          */
-        public static final CharSequence CONTENT_RANGE = new HttpHeaderName("Content-Range");
+        public static final CharSequence CONTENT_RANGE = new HttpHeaderCharsequence("Content-Range");
         /**
          * {@code "Content-Type"}
          */
-        public static final CharSequence CONTENT_TYPE = new HttpHeaderName("Content-Type");
+        public static final CharSequence CONTENT_TYPE = new HttpHeaderCharsequence("Content-Type");
         /**
          * {@code "Cookie"}
          */
-        public static final CharSequence COOKIE = new HttpHeaderName("Cookie");
+        public static final CharSequence COOKIE = new HttpHeaderCharsequence("Cookie");
         /**
          * {@code "Date"}
          */
-        public static final CharSequence DATE = new HttpHeaderName("Date");
+        public static final CharSequence DATE = new HttpHeaderCharsequence("Date");
         /**
          * {@code "ETag"}
          */
-        public static final CharSequence ETAG = new HttpHeaderName("ETag");
+        public static final CharSequence ETAG = new HttpHeaderCharsequence("ETag");
         /**
          * {@code "Expect"}
          */
-        public static final CharSequence EXPECT = new HttpHeaderName("Expect");
+        public static final CharSequence EXPECT = new HttpHeaderCharsequence("Expect");
         /**
          * {@code "Expires"}
          */
-        public static final CharSequence EXPIRES = new HttpHeaderName("Expires");
+        public static final CharSequence EXPIRES = new HttpHeaderCharsequence("Expires");
         /**
          * {@code "From"}
          */
-        public static final CharSequence FROM = new HttpHeaderName("From");
+        public static final CharSequence FROM = new HttpHeaderCharsequence("From");
         /**
          * {@code "Host"}
          */
-        public static final CharSequence HOST = new HttpHeaderName("Host");
+        public static final CharSequence HOST = new HttpHeaderCharsequence("Host");
         /**
          * {@code "If-Match"}
          */
-        public static final CharSequence IF_MATCH = new HttpHeaderName("If-Match");
+        public static final CharSequence IF_MATCH = new HttpHeaderCharsequence("If-Match");
         /**
          * {@code "If-Modified-Since"}
          */
-        public static final CharSequence IF_MODIFIED_SINCE = new HttpHeaderName("If-Modified-Since");
+        public static final CharSequence IF_MODIFIED_SINCE = new HttpHeaderCharsequence("If-Modified-Since");
         /**
          * {@code "If-None-Match"}
          */
-        public static final CharSequence IF_NONE_MATCH = new HttpHeaderName("If-None-Match");
+        public static final CharSequence IF_NONE_MATCH = new HttpHeaderCharsequence("If-None-Match");
         /**
          * {@code "If-Range"}
          */
-        public static final CharSequence IF_RANGE = new HttpHeaderName("If-Range");
+        public static final CharSequence IF_RANGE = new HttpHeaderCharsequence("If-Range");
         /**
          * {@code "If-Unmodified-Since"}
          */
-        public static final CharSequence IF_UNMODIFIED_SINCE = new HttpHeaderName("If-Unmodified-Since");
+        public static final CharSequence IF_UNMODIFIED_SINCE = new HttpHeaderCharsequence("If-Unmodified-Since");
         /**
          * {@code "Last-Modified"}
          */
-        public static final CharSequence LAST_MODIFIED = new HttpHeaderName("Last-Modified");
+        public static final CharSequence LAST_MODIFIED = new HttpHeaderCharsequence("Last-Modified");
         /**
          * {@code "Location"}
          */
-        public static final CharSequence LOCATION = new HttpHeaderName("Location");
+        public static final CharSequence LOCATION = new HttpHeaderCharsequence("Location");
         /**
          * {@code "Max-Forwards"}
          */
-        public static final CharSequence MAX_FORWARDS = new HttpHeaderName("Max-Forwards");
+        public static final CharSequence MAX_FORWARDS = new HttpHeaderCharsequence("Max-Forwards");
         /**
          * {@code "Origin"}
          */
-        public static final CharSequence ORIGIN = new HttpHeaderName("Origin");
+        public static final CharSequence ORIGIN = new HttpHeaderCharsequence("Origin");
         /**
          * {@code "Pragma"}
          */
-        public static final CharSequence PRAGMA = new HttpHeaderName("Pragma");
+        public static final CharSequence PRAGMA = new HttpHeaderCharsequence("Pragma");
         /**
          * {@code "Proxy-Authenticate"}
          */
-        public static final CharSequence PROXY_AUTHENTICATE = new HttpHeaderName("Proxy-Authenticate");
+        public static final CharSequence PROXY_AUTHENTICATE = new HttpHeaderCharsequence("Proxy-Authenticate");
         /**
          * {@code "Proxy-Authorization"}
          */
-        public static final CharSequence PROXY_AUTHORIZATION = new HttpHeaderName("Proxy-Authorization");
+        public static final CharSequence PROXY_AUTHORIZATION = new HttpHeaderCharsequence("Proxy-Authorization");
         /**
          * {@code "Range"}
          */
-        public static final CharSequence RANGE = new HttpHeaderName("Range");
+        public static final CharSequence RANGE = new HttpHeaderCharsequence("Range");
         /**
          * {@code "Referer"}
          */
-        public static final CharSequence REFERER = new HttpHeaderName("Referer");
+        public static final CharSequence REFERER = new HttpHeaderCharsequence("Referer");
         /**
          * {@code "Retry-After"}
          */
-        public static final CharSequence RETRY_AFTER = new HttpHeaderName("Retry-After");
+        public static final CharSequence RETRY_AFTER = new HttpHeaderCharsequence("Retry-After");
         /**
          * {@code "Sec-WebSocket-Key1"}
          */
-        public static final CharSequence SEC_WEBSOCKET_KEY1 = new HttpHeaderName("Sec-WebSocket-Key1");
+        public static final CharSequence SEC_WEBSOCKET_KEY1 = new HttpHeaderCharsequence("Sec-WebSocket-Key1");
         /**
          * {@code "Sec-WebSocket-Key2"}
          */
-        public static final CharSequence SEC_WEBSOCKET_KEY2 = new HttpHeaderName("Sec-WebSocket-Key2");
+        public static final CharSequence SEC_WEBSOCKET_KEY2 = new HttpHeaderCharsequence("Sec-WebSocket-Key2");
         /**
          * {@code "Sec-WebSocket-Location"}
          */
-        public static final CharSequence SEC_WEBSOCKET_LOCATION = new HttpHeaderName("Sec-WebSocket-Location");
+        public static final CharSequence SEC_WEBSOCKET_LOCATION = new HttpHeaderCharsequence("Sec-WebSocket-Location");
         /**
          * {@code "Sec-WebSocket-Origin"}
          */
-        public static final CharSequence SEC_WEBSOCKET_ORIGIN = new HttpHeaderName("Sec-WebSocket-Origin");
+        public static final CharSequence SEC_WEBSOCKET_ORIGIN = new HttpHeaderCharsequence("Sec-WebSocket-Origin");
         /**
          * {@code "Sec-WebSocket-Protocol"}
          */
-        public static final CharSequence SEC_WEBSOCKET_PROTOCOL = new HttpHeaderName("Sec-WebSocket-Protocol");
+        public static final CharSequence SEC_WEBSOCKET_PROTOCOL = new HttpHeaderCharsequence("Sec-WebSocket-Protocol");
         /**
          * {@code "Sec-WebSocket-Version"}
          */
-        public static final CharSequence SEC_WEBSOCKET_VERSION = new HttpHeaderName("Sec-WebSocket-Version");
+        public static final CharSequence SEC_WEBSOCKET_VERSION = new HttpHeaderCharsequence("Sec-WebSocket-Version");
         /**
          * {@code "Sec-WebSocket-Key"}
          */
-        public static final CharSequence SEC_WEBSOCKET_KEY = new HttpHeaderName("Sec-WebSocket-Key");
+        public static final CharSequence SEC_WEBSOCKET_KEY = new HttpHeaderCharsequence("Sec-WebSocket-Key");
         /**
          * {@code "Sec-WebSocket-Accept"}
          */
-        public static final CharSequence SEC_WEBSOCKET_ACCEPT = new HttpHeaderName("Sec-WebSocket-Accept");
+        public static final CharSequence SEC_WEBSOCKET_ACCEPT = new HttpHeaderCharsequence("Sec-WebSocket-Accept");
         /**
          * {@code "Server"}
          */
-        public static final CharSequence SERVER = new HttpHeaderName("Server");
+        public static final CharSequence SERVER = new HttpHeaderCharsequence("Server");
         /**
          * {@code "Set-Cookie"}
          */
-        public static final CharSequence SET_COOKIE = new HttpHeaderName("Set-Cookie");
+        public static final CharSequence SET_COOKIE = new HttpHeaderCharsequence("Set-Cookie");
         /**
          * {@code "Set-Cookie2"}
          */
-        public static final CharSequence SET_COOKIE2 = new HttpHeaderName("Set-Cookie2");
+        public static final CharSequence SET_COOKIE2 = new HttpHeaderCharsequence("Set-Cookie2");
         /**
          * {@code "TE"}
          */
-        public static final CharSequence TE = new HttpHeaderName("TE");
+        public static final CharSequence TE = new HttpHeaderCharsequence("TE");
         /**
          * {@code "Trailer"}
          */
-        public static final CharSequence TRAILER = new HttpHeaderName("Trailer");
+        public static final CharSequence TRAILER = new HttpHeaderCharsequence("Trailer");
         /**
          * {@code "Transfer-Encoding"}
          */
-        public static final CharSequence TRANSFER_ENCODING = new HttpHeaderName("Transfer-Encoding");
+        public static final CharSequence TRANSFER_ENCODING = new HttpHeaderCharsequence("Transfer-Encoding");
         /**
          * {@code "Upgrade"}
          */
-        public static final CharSequence UPGRADE = new HttpHeaderName("Upgrade");
+        public static final CharSequence UPGRADE = new HttpHeaderCharsequence("Upgrade");
         /**
          * {@code "User-Agent"}
          */
-        public static final CharSequence USER_AGENT = new HttpHeaderName("User-Agent");
+        public static final CharSequence USER_AGENT = new HttpHeaderCharsequence("User-Agent");
         /**
          * {@code "Vary"}
          */
-        public static final CharSequence VARY = new HttpHeaderName("Vary");
+        public static final CharSequence VARY = new HttpHeaderCharsequence("Vary");
         /**
          * {@code "Via"}
          */
-        public static final CharSequence VIA = new HttpHeaderName("Via");
+        public static final CharSequence VIA = new HttpHeaderCharsequence("Via");
         /**
          * {@code "Warning"}
          */
-        public static final CharSequence WARNING = new HttpHeaderName("Warning");
+        public static final CharSequence WARNING = new HttpHeaderCharsequence("Warning");
         /**
          * {@code "WebSocket-Location"}
          */
-        public static final CharSequence WEBSOCKET_LOCATION = new HttpHeaderName("WebSocket-Location");
+        public static final CharSequence WEBSOCKET_LOCATION = new HttpHeaderCharsequence("WebSocket-Location");
         /**
          * {@code "WebSocket-Origin"}
          */
-        public static final CharSequence WEBSOCKET_ORIGIN = new HttpHeaderName("WebSocket-Origin");
+        public static final CharSequence WEBSOCKET_ORIGIN = new HttpHeaderCharsequence("WebSocket-Origin");
         /**
          * {@code "WebSocket-Protocol"}
          */
-        public static final CharSequence WEBSOCKET_PROTOCOL = new HttpHeaderName("WebSocket-Protocol");
+        public static final CharSequence WEBSOCKET_PROTOCOL = new HttpHeaderCharsequence("WebSocket-Protocol");
         /**
          * {@code "WWW-Authenticate"}
          */
-        public static final CharSequence WWW_AUTHENTICATE = new HttpHeaderName("WWW-Authenticate");
+        public static final CharSequence WWW_AUTHENTICATE = new HttpHeaderCharsequence("WWW-Authenticate");
 
         private Names() {
         }
@@ -1192,8 +1201,8 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
     }
 
     static int hash(CharSequence name) {
-        if (name instanceof HttpHeaderName) {
-            return ((HttpHeaderName) name).hash();
+        if (name instanceof HttpHeaderCharsequence) {
+            return ((HttpHeaderCharsequence) name).hash();
         }
         int h = 0;
         for (int i = name.length() - 1; i >= 0; i --) {
@@ -1213,8 +1222,32 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
         }
     }
 
-    public static CharSequence createHeaderName(String name) {
-        return new HttpHeaderName(name);
+    static void encode(HttpHeaders headers, ByteBuf buf) {
+        if (headers instanceof DefaultHttpHeaders) {
+            ((DefaultHttpHeaders) headers).encode(buf);
+        } else {
+            for (Entry<String, String> header: headers) {
+                encode(header.getKey(), header.getValue(), buf);
+            }
+        }
+    }
+
+    static void encode(CharSequence key, CharSequence value, ByteBuf buf) {
+        encodeAscii(key, buf);
+        buf.writeBytes(HEADER_SEPERATOR);
+        encodeAscii(value, buf);
+        buf.writeBytes(CRLF);
+    }
+
+    public static void encodeAscii(CharSequence seq, ByteBuf buf) {
+        if (seq instanceof HttpHeaderCharsequence) {
+            ((HttpHeaderCharsequence) seq).encode(buf);
+        } else {
+            int length = seq.length();
+            for (int i = 0 ; i < length; i++) {
+                buf.writeByte((byte) seq.charAt(i));
+            }
+        }
     }
 
     protected HttpHeaders() { }

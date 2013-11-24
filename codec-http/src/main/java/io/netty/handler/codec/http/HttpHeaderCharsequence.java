@@ -15,14 +15,19 @@
  */
 package io.netty.handler.codec.http;
 
-public final class HttpHeaderName implements CharSequence {
+import io.netty.buffer.ByteBuf;
+import io.netty.util.CharsetUtil;
+
+public final class HttpHeaderCharsequence implements CharSequence {
 
     private final String name;
     private final int hash;
+    private final byte[] bytes;
 
-    public HttpHeaderName(String name) {
+    public HttpHeaderCharsequence(String name) {
         this.name = name;
         hash = HttpHeaders.hash(name);
+        bytes = name.getBytes(CharsetUtil.US_ASCII);
     }
 
     int hash() {
@@ -31,21 +36,25 @@ public final class HttpHeaderName implements CharSequence {
 
     @Override
     public int length() {
-        return name.length();
+        return bytes.length;
     }
 
     @Override
     public char charAt(int index) {
-        return name.charAt(index);
+        return (char) bytes[index];
     }
 
     @Override
     public CharSequence subSequence(int start, int end) {
-        return new HttpHeaderName(name.substring(start, end));
+        return new HttpHeaderCharsequence(name.substring(start, end));
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    void encode(ByteBuf buf) {
+        buf.writeBytes(bytes);
     }
 }

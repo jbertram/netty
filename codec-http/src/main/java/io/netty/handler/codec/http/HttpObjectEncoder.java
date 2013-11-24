@@ -70,7 +70,7 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
             ByteBuf buf = ctx.alloc().buffer();
             // Encode the message.
             encodeInitialLine(buf, m);
-            encodeHeaders(buf, m.headers());
+            HttpHeaders.encode(m.headers(), buf);
             buf.writeBytes(CRLF);
             out.add(buf);
             state = HttpHeaders.isTransferEncodingChunked(m) ? ST_CONTENT_CHUNK : ST_CONTENT_NON_CHUNK;
@@ -119,7 +119,7 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
             } else {
                 ByteBuf buf = ctx.alloc().buffer();
                 buf.writeBytes(ZERO_CRLF);
-                encodeHeaders(buf, headers);
+                HttpHeaders.encode(headers, buf);
                 buf.writeBytes(CRLF);
                 out.add(buf);
             }
@@ -163,25 +163,6 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
             return (int) ((FileRegion) msg).count();
         }
         throw new IllegalStateException("unexpected message type: " + StringUtil.simpleClassName(msg));
-    }
-
-    private static void encodeHeaders(ByteBuf buf, HttpHeaders headers) {
-        for (Map.Entry<String, String> h: headers) {
-            encodeHeader(buf, h.getKey(), h.getValue());
-        }
-    }
-
-    private static void encodeHeader(ByteBuf buf, String header, String value) {
-        encodeAscii(header, buf);
-        buf.writeBytes(HEADER_SEPARATOR);
-        encodeAscii(value, buf);
-        buf.writeBytes(CRLF);
-    }
-
-    protected static void encodeAscii(String s, ByteBuf buf) {
-        for (int i = 0; i < s.length(); i++) {
-            buf.writeByte(s.charAt(i));
-        }
     }
 
     protected abstract void encodeInitialLine(ByteBuf buf, H message) throws Exception;
