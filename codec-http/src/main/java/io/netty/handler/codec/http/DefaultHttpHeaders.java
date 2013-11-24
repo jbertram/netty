@@ -31,31 +31,12 @@ public class DefaultHttpHeaders extends HttpHeaders {
 
     private static final int BUCKET_SIZE = 17;
 
-    private static int hash(String name) {
-        int h = 0;
-        for (int i = name.length() - 1; i >= 0; i --) {
-            char c = name.charAt(i);
-            if (c >= 'A' && c <= 'Z') {
-                c += 32;
-            }
-            h = 31 * h + c;
-        }
-
-        if (h > 0) {
-            return h;
-        } else if (h == Integer.MIN_VALUE) {
-            return Integer.MAX_VALUE;
-        } else {
-            return -h;
-        }
-    }
-
     private static int index(int hash) {
         return hash % BUCKET_SIZE;
     }
 
     private final HeaderEntry[] entries = new HeaderEntry[BUCKET_SIZE];
-    private final HeaderEntry head = new HeaderEntry(-1, null, null);
+    private final HeaderEntry head = new HeaderEntry();
     protected final boolean validate;
 
     public DefaultHttpHeaders() {
@@ -67,12 +48,12 @@ public class DefaultHttpHeaders extends HttpHeaders {
         head.before = head.after = head;
     }
 
-    void validateHeaderName0(String headerName) {
+    void validateHeaderName0(CharSequence headerName) {
         validateHeaderName(headerName);
     }
 
     @Override
-    public HttpHeaders add(final String name, final Object value) {
+    public HttpHeaders add(final CharSequence name, final Object value) {
         String strVal;
         if (validate) {
             validateHeaderName0(name);
@@ -88,7 +69,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders add(String name, Iterable<?> values) {
+    public HttpHeaders add(CharSequence name, Iterable<?> values) {
         if (validate) {
             validateHeaderName0(name);
         }
@@ -104,7 +85,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         return this;
     }
 
-    private void add0(int h, int i, final String name, final String value) {
+    private void add0(int h, int i, final CharSequence name, final String value) {
         // Update the hash table.
         HeaderEntry e = entries[i];
         HeaderEntry newEntry;
@@ -116,7 +97,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders remove(final String name) {
+    public HttpHeaders remove(final CharSequence name) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -126,7 +107,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
         return this;
     }
 
-    private void remove0(int h, int i, String name) {
+    private void remove0(int h, int i, CharSequence name) {
         HeaderEntry e = entries[i];
         if (e == null) {
             return;
@@ -163,7 +144,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders set(final String name, final Object value) {
+    public HttpHeaders set(final CharSequence name, final Object value) {
         String strVal;
         if (validate) {
             validateHeaderName0(name);
@@ -180,7 +161,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public HttpHeaders set(final String name, final Iterable<?> values) {
+    public HttpHeaders set(final CharSequence name, final Iterable<?> values) {
         if (values == null) {
             throw new NullPointerException("values");
         }
@@ -214,7 +195,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public String get(final String name) {
+    public String get(final CharSequence name) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -235,7 +216,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public List<String> getAll(final String name) {
+    public List<String> getAll(final CharSequence name) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -273,7 +254,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public boolean contains(String name) {
+    public boolean contains(CharSequence name) {
         return get(name) != null;
     }
 
@@ -283,7 +264,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public boolean contains(String name, String value, boolean ignoreCaseValue) {
+    public boolean contains(CharSequence name, String value, boolean ignoreCaseValue) {
         if (name == null) {
             throw new NullPointerException("name");
         }
@@ -373,10 +354,16 @@ public class DefaultHttpHeaders extends HttpHeaders {
         HeaderEntry next;
         HeaderEntry before, after;
 
-        HeaderEntry(int hash, String key, String value) {
+        HeaderEntry(int hash, CharSequence key, String value) {
             this.hash = hash;
-            this.key = key;
+            this.key = key.toString();
             this.value = value;
+        }
+
+        HeaderEntry() {
+            hash = -1;
+            key = null;
+            value = null;
         }
 
         void remove() {

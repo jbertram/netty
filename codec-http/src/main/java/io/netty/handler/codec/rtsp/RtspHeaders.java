@@ -15,6 +15,7 @@
  */
 package io.netty.handler.codec.rtsp;
 
+import io.netty.handler.codec.http.HttpHeaderName;
 import io.netty.handler.codec.http.HttpHeaders;
 
 
@@ -30,179 +31,179 @@ public final class RtspHeaders {
         /**
          * {@code "Accept"}
          */
-        public static final String ACCEPT = HttpHeaders.Names.ACCEPT;
+        public static final CharSequence ACCEPT = HttpHeaders.Names.ACCEPT;
         /**
          * {@code "Accept-Encoding"}
          */
-        public static final String ACCEPT_ENCODING = HttpHeaders.Names.ACCEPT_ENCODING;
+        public static final CharSequence ACCEPT_ENCODING = HttpHeaders.Names.ACCEPT_ENCODING;
         /**
          * {@code "Accept-Lanugage"}
          */
-        public static final String ACCEPT_LANGUAGE = HttpHeaders.Names.ACCEPT_LANGUAGE;
+        public static final CharSequence ACCEPT_LANGUAGE = HttpHeaders.Names.ACCEPT_LANGUAGE;
         /**
          * {@code "Allow"}
          */
-        public static final String ALLOW = "Allow";
+        public static final CharSequence ALLOW = new HttpHeaderName("Allow");
         /**
          * {@code "Authorization"}
          */
-        public static final String AUTHORIZATION = HttpHeaders.Names.AUTHORIZATION;
+        public static final CharSequence AUTHORIZATION = HttpHeaders.Names.AUTHORIZATION;
         /**
          * {@code "Bandwidth"}
          */
-        public static final String BANDWIDTH = "Bandwidth";
+        public static final CharSequence BANDWIDTH = new HttpHeaderName("Bandwidth");
         /**
          * {@code "Blocksize"}
          */
-        public static final String BLOCKSIZE = "Blocksize";
+        public static final CharSequence BLOCKSIZE = new HttpHeaderName("Blocksize");
         /**
          * {@code "Cache-Control"}
          */
-        public static final String CACHE_CONTROL = HttpHeaders.Names.CACHE_CONTROL;
+        public static final CharSequence CACHE_CONTROL = HttpHeaders.Names.CACHE_CONTROL;
         /**
          * {@code "Conference"}
          */
-        public static final String CONFERENCE = "Conference";
+        public static final CharSequence CONFERENCE = new HttpHeaderName("Conference");
         /**
          * {@code "Connection"}
          */
-        public static final String CONNECTION = HttpHeaders.Names.CONNECTION;
+        public static final CharSequence CONNECTION = HttpHeaders.Names.CONNECTION;
         /**
          * {@code "Content-Base"}
          */
-        public static final String CONTENT_BASE = HttpHeaders.Names.CONTENT_BASE;
+        public static final CharSequence CONTENT_BASE = HttpHeaders.Names.CONTENT_BASE;
         /**
          * {@code "Content-Encoding"}
          */
-        public static final String CONTENT_ENCODING = HttpHeaders.Names.CONTENT_ENCODING;
+        public static final CharSequence CONTENT_ENCODING = HttpHeaders.Names.CONTENT_ENCODING;
         /**
          * {@code "Content-Language"}
          */
-        public static final String CONTENT_LANGUAGE = HttpHeaders.Names.CONTENT_LANGUAGE;
+        public static final CharSequence CONTENT_LANGUAGE = HttpHeaders.Names.CONTENT_LANGUAGE;
         /**
          * {@code "Content-Length"}
          */
-        public static final String CONTENT_LENGTH = HttpHeaders.Names.CONTENT_LENGTH;
+        public static final CharSequence CONTENT_LENGTH = HttpHeaders.Names.CONTENT_LENGTH;
         /**
          * {@code "Content-Location"}
          */
-        public static final String CONTENT_LOCATION = HttpHeaders.Names.CONTENT_LOCATION;
+        public static final CharSequence CONTENT_LOCATION = HttpHeaders.Names.CONTENT_LOCATION;
         /**
          * {@code "Content-Type"}
          */
-        public static final String CONTENT_TYPE = HttpHeaders.Names.CONTENT_TYPE;
+        public static final CharSequence CONTENT_TYPE = HttpHeaders.Names.CONTENT_TYPE;
         /**
          * {@code "CSeq"}
          */
-        public static final String CSEQ = "CSeq";
+        public static final CharSequence CSEQ = new HttpHeaderName("CSeq");
         /**
          * {@code "Date"}
          */
-        public static final String DATE = HttpHeaders.Names.DATE;
+        public static final CharSequence DATE = HttpHeaders.Names.DATE;
         /**
          * {@code "Expires"}
          */
-        public static final String EXPIRES = HttpHeaders.Names.EXPIRES;
+        public static final CharSequence EXPIRES = HttpHeaders.Names.EXPIRES;
         /**
          * {@code "From"}
          */
-        public static final String FROM = HttpHeaders.Names.FROM;
+        public static final CharSequence FROM = HttpHeaders.Names.FROM;
         /**
          * {@code "Host"}
          */
-        public static final String HOST = HttpHeaders.Names.HOST;
+        public static final CharSequence HOST = HttpHeaders.Names.HOST;
         /**
          * {@code "If-Match"}
          */
-        public static final String IF_MATCH = HttpHeaders.Names.IF_MATCH;
+        public static final CharSequence IF_MATCH = HttpHeaders.Names.IF_MATCH;
         /**
          * {@code "If-Modified-Since"}
          */
-        public static final String IF_MODIFIED_SINCE = HttpHeaders.Names.IF_MODIFIED_SINCE;
+        public static final CharSequence IF_MODIFIED_SINCE = HttpHeaders.Names.IF_MODIFIED_SINCE;
         /**
          * {@code "KeyMgmt"}
          */
-        public static final String KEYMGMT = "KeyMgmt";
+        public static final CharSequence KEYMGMT = new HttpHeaderName("KeyMgmt");
         /**
          * {@code "Last-Modified"}
          */
-        public static final String LAST_MODIFIED = HttpHeaders.Names.LAST_MODIFIED;
+        public static final CharSequence LAST_MODIFIED = HttpHeaders.Names.LAST_MODIFIED;
         /**
          * {@code "Proxy-Authenticate"}
          */
-        public static final String PROXY_AUTHENTICATE = HttpHeaders.Names.PROXY_AUTHENTICATE;
+        public static final CharSequence PROXY_AUTHENTICATE = HttpHeaders.Names.PROXY_AUTHENTICATE;
         /**
          * {@code "Proxy-Require"}
          */
-        public static final String PROXY_REQUIRE = "Proxy-Require";
+        public static final CharSequence PROXY_REQUIRE = new HttpHeaderName("Proxy-Require");
         /**
          * {@code "Public"}
          */
-        public static final String PUBLIC = "Public";
+        public static final CharSequence PUBLIC = new HttpHeaderName("Public");
         /**
          * {@code "Range"}
          */
-        public static final String RANGE = HttpHeaders.Names.RANGE;
+        public static final CharSequence RANGE = HttpHeaders.Names.RANGE;
         /**
          * {@code "Referer"}
          */
-        public static final String REFERER = HttpHeaders.Names.REFERER;
+        public static final CharSequence REFERER = HttpHeaders.Names.REFERER;
         /**
          * {@code "Require"}
          */
-        public static final String REQUIRE = "Require";
+        public static final CharSequence REQUIRE = new HttpHeaderName("Require");
         /**
          * {@code "Retry-After"}
          */
-        public static final String RETRT_AFTER = HttpHeaders.Names.RETRY_AFTER;
+        public static final CharSequence RETRT_AFTER = HttpHeaders.Names.RETRY_AFTER;
         /**
          * {@code "RTP-Info"}
          */
-        public static final String RTP_INFO = "RTP-Info";
+        public static final CharSequence RTP_INFO = new HttpHeaderName("RTP-Info");
         /**
          * {@code "Scale"}
          */
-        public static final String SCALE = "Scale";
+        public static final CharSequence SCALE = new HttpHeaderName("Scale");
         /**
          * {@code "Session"}
          */
-        public static final String SESSION = "Session";
+        public static final CharSequence SESSION = new HttpHeaderName("Session");
         /**
          * {@code "Server"}
          */
-        public static final String SERVER = HttpHeaders.Names.SERVER;
+        public static final CharSequence SERVER = HttpHeaders.Names.SERVER;
         /**
          * {@code "Speed"}
          */
-        public static final String SPEED = "Speed";
+        public static final CharSequence SPEED = new HttpHeaderName("Speed");
         /**
          * {@code "Timestamp"}
          */
-        public static final String TIMESTAMP = "Timestamp";
+        public static final CharSequence TIMESTAMP = new HttpHeaderName("Timestamp");
         /**
          * {@code "Transport"}
          */
-        public static final String TRANSPORT = "Transport";
+        public static final CharSequence TRANSPORT = new HttpHeaderName("Transport");
         /**
          * {@code "Unsupported"}
          */
-        public static final String UNSUPPORTED = "Unsupported";
+        public static final CharSequence UNSUPPORTED = new HttpHeaderName("Unsupported");
         /**
          * {@code "User-Agent"}
          */
-        public static final String USER_AGENT = HttpHeaders.Names.USER_AGENT;
+        public static final CharSequence USER_AGENT = HttpHeaders.Names.USER_AGENT;
         /**
          * {@code "Vary"}
          */
-        public static final String VARY = HttpHeaders.Names.VARY;
+        public static final CharSequence VARY = HttpHeaders.Names.VARY;
         /**
          * {@code "Via"}
          */
-        public static final String VIA = HttpHeaders.Names.VIA;
+        public static final CharSequence VIA = HttpHeaders.Names.VIA;
         /**
          * {@code "WWW-Authenticate"}
          */
-        public static final String WWW_AUTHENTICATE = HttpHeaders.Names.WWW_AUTHENTICATE;
+        public static final CharSequence WWW_AUTHENTICATE = HttpHeaders.Names.WWW_AUTHENTICATE;
 
         private Names() {
         }
