@@ -102,9 +102,11 @@ class OioWorker implements Runnable {
                     channel.getConfig().getBufferFactory().getBuffer(buf, 0, readBytes));
         }
 
-        // Setting the workerThread to null will prevent any channel
-        // operations from interrupting this thread from now on.
-        channel.workerThread = null;
+        synchronized (channel.interestOpsLock) {
+            // Setting the workerThread to null will prevent any channel
+            // operations from interrupting this thread from now on.
+            channel.workerThread = null;
+        }
 
         // Clean up.
         close(channel, succeededFuture(channel));
@@ -222,9 +224,11 @@ class OioWorker implements Runnable {
                 if (connected) {
                     // Notify the worker so it stops reading.
                     Thread currentThread = Thread.currentThread();
-                    Thread workerThread = channel.workerThread;
-                    if (workerThread != null && currentThread != workerThread) {
-                        workerThread.interrupt();
+                    synchronized (channel.interestOpsLock) {
+                        Thread workerThread = channel.workerThread;
+                        if (workerThread != null && currentThread != workerThread) {
+                            workerThread.interrupt();
+                        }
                     }
                     fireChannelDisconnected(channel);
                 }
