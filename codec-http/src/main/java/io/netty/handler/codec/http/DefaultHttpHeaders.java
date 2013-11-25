@@ -269,7 +269,7 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     @Override
-    public boolean contains(CharSequence name, String value, boolean ignoreCaseValue) {
+    public boolean contains(CharSequence name, CharSequence value, boolean ignoreCaseValue) {
         if (name == null) {
             throw new NullPointerException("name");
         }

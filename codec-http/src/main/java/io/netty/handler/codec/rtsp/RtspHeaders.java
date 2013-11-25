@@ -15,7 +15,6 @@
  */
 package io.netty.handler.codec.rtsp;
 
-import io.netty.handler.codec.http.HttpHeaderCharsequence;
 import io.netty.handler.codec.http.HttpHeaders;
 
 
@@ -43,7 +42,7 @@ public final class RtspHeaders {
         /**
          * {@code "Allow"}
          */
-        public static final CharSequence ALLOW = new HttpHeaderCharsequence("Allow");
+        public static final CharSequence ALLOW = HttpHeaders.newEntity("Allow");
         /**
          * {@code "Authorization"}
          */
@@ -51,11 +50,11 @@ public final class RtspHeaders {
         /**
          * {@code "Bandwidth"}
          */
-        public static final CharSequence BANDWIDTH = new HttpHeaderCharsequence("Bandwidth");
+        public static final CharSequence BANDWIDTH = HttpHeaders.newEntity("Bandwidth");
         /**
          * {@code "Blocksize"}
          */
-        public static final CharSequence BLOCKSIZE = new HttpHeaderCharsequence("Blocksize");
+        public static final CharSequence BLOCKSIZE = HttpHeaders.newEntity("Blocksize");
         /**
          * {@code "Cache-Control"}
          */
@@ -63,7 +62,7 @@ public final class RtspHeaders {
         /**
          * {@code "Conference"}
          */
-        public static final CharSequence CONFERENCE = new HttpHeaderCharsequence("Conference");
+        public static final CharSequence CONFERENCE = HttpHeaders.newEntity("Conference");
         /**
          * {@code "Connection"}
          */
@@ -95,7 +94,7 @@ public final class RtspHeaders {
         /**
          * {@code "CSeq"}
          */
-        public static final CharSequence CSEQ = new HttpHeaderCharsequence("CSeq");
+        public static final CharSequence CSEQ = HttpHeaders.newEntity("CSeq");
         /**
          * {@code "Date"}
          */
@@ -123,7 +122,7 @@ public final class RtspHeaders {
         /**
          * {@code "KeyMgmt"}
          */
-        public static final CharSequence KEYMGMT = new HttpHeaderCharsequence("KeyMgmt");
+        public static final CharSequence KEYMGMT = HttpHeaders.newEntity("KeyMgmt");
         /**
          * {@code "Last-Modified"}
          */
@@ -135,11 +134,11 @@ public final class RtspHeaders {
         /**
          * {@code "Proxy-Require"}
          */
-        public static final CharSequence PROXY_REQUIRE = new HttpHeaderCharsequence("Proxy-Require");
+        public static final CharSequence PROXY_REQUIRE = HttpHeaders.newEntity("Proxy-Require");
         /**
          * {@code "Public"}
          */
-        public static final CharSequence PUBLIC = new HttpHeaderCharsequence("Public");
+        public static final CharSequence PUBLIC = HttpHeaders.newEntity("Public");
         /**
          * {@code "Range"}
          */
@@ -151,7 +150,7 @@ public final class RtspHeaders {
         /**
          * {@code "Require"}
          */
-        public static final CharSequence REQUIRE = new HttpHeaderCharsequence("Require");
+        public static final CharSequence REQUIRE = HttpHeaders.newEntity("Require");
         /**
          * {@code "Retry-After"}
          */
@@ -159,15 +158,15 @@ public final class RtspHeaders {
         /**
          * {@code "RTP-Info"}
          */
-        public static final CharSequence RTP_INFO = new HttpHeaderCharsequence("RTP-Info");
+        public static final CharSequence RTP_INFO = HttpHeaders.newEntity("RTP-Info");
         /**
          * {@code "Scale"}
          */
-        public static final CharSequence SCALE = new HttpHeaderCharsequence("Scale");
+        public static final CharSequence SCALE = HttpHeaders.newEntity("Scale");
         /**
          * {@code "Session"}
          */
-        public static final CharSequence SESSION = new HttpHeaderCharsequence("Session");
+        public static final CharSequence SESSION = HttpHeaders.newEntity("Session");
         /**
          * {@code "Server"}
          */
@@ -175,19 +174,19 @@ public final class RtspHeaders {
         /**
          * {@code "Speed"}
          */
-        public static final CharSequence SPEED = new HttpHeaderCharsequence("Speed");
+        public static final CharSequence SPEED = HttpHeaders.newEntity("Speed");
         /**
          * {@code "Timestamp"}
          */
-        public static final CharSequence TIMESTAMP = new HttpHeaderCharsequence("Timestamp");
+        public static final CharSequence TIMESTAMP = HttpHeaders.newEntity("Timestamp");
         /**
          * {@code "Transport"}
          */
-        public static final CharSequence TRANSPORT = new HttpHeaderCharsequence("Transport");
+        public static final CharSequence TRANSPORT = HttpHeaders.newEntity("Transport");
         /**
          * {@code "Unsupported"}
          */
-        public static final CharSequence UNSUPPORTED = new HttpHeaderCharsequence("Unsupported");
+        public static final CharSequence UNSUPPORTED = HttpHeaders.newEntity("Unsupported");
         /**
          * {@code "User-Agent"}
          */
@@ -216,171 +215,171 @@ public final class RtspHeaders {
         /**
          * {@code "append"}
          */
-        public static final String APPEND = "append";
+        public static final CharSequence APPEND = HttpHeaders.newEntity("append");
         /**
          * {@code "AVP"}
          */
-        public static final String AVP = "AVP";
+        public static final CharSequence AVP = HttpHeaders.newEntity("AVP");
         /**
          * {@code "bytes"}
          */
-        public static final String BYTES = HttpHeaders.Values.BYTES;
+        public static final CharSequence BYTES = HttpHeaders.Values.BYTES;
         /**
          * {@code "charset"}
          */
-        public static final String CHARSET = HttpHeaders.Values.CHARSET;
+        public static final CharSequence CHARSET = HttpHeaders.Values.CHARSET;
         /**
          * {@code "client_port"}
          */
-        public static final String CLIENT_PORT = "client_port";
+        public static final CharSequence CLIENT_PORT = HttpHeaders.newEntity("client_port");
         /**
          * {@code "clock"}
          */
-        public static final String CLOCK = "clock";
+        public static final CharSequence CLOCK = HttpHeaders.newEntity("clock");
         /**
          * {@code "close"}
          */
-        public static final String CLOSE = HttpHeaders.Values.CLOSE;
+        public static final CharSequence CLOSE = HttpHeaders.Values.CLOSE;
         /**
          * {@code "compress"}
          */
-        public static final String COMPRESS = HttpHeaders.Values.COMPRESS;
+        public static final CharSequence COMPRESS = HttpHeaders.Values.COMPRESS;
         /**
          * {@code "100-continue"}
          */
-        public static final String CONTINUE =  HttpHeaders.Values.CONTINUE;
+        public static final CharSequence CONTINUE =  HttpHeaders.Values.CONTINUE;
         /**
          * {@code "deflate"}
          */
-        public static final String DEFLATE = HttpHeaders.Values.DEFLATE;
+        public static final CharSequence DEFLATE = HttpHeaders.Values.DEFLATE;
         /**
          * {@code "destination"}
          */
-        public static final String DESTINATION = "destination";
+        public static final CharSequence DESTINATION = HttpHeaders.newEntity("destination");
         /**
          * {@code "gzip"}
          */
-        public static final String GZIP = HttpHeaders.Values.GZIP;
+        public static final CharSequence GZIP = HttpHeaders.Values.GZIP;
         /**
          * {@code "identity"}
          */
-        public static final String IDENTITY = HttpHeaders.Values.IDENTITY;
+        public static final CharSequence IDENTITY = HttpHeaders.Values.IDENTITY;
         /**
          * {@code "interleaved"}
          */
-        public static final String INTERLEAVED = "interleaved";
+        public static final CharSequence INTERLEAVED = HttpHeaders.newEntity("interleaved");
         /**
          * {@code "keep-alive"}
          */
-        public static final String KEEP_ALIVE = HttpHeaders.Values.KEEP_ALIVE;
+        public static final CharSequence KEEP_ALIVE = HttpHeaders.Values.KEEP_ALIVE;
         /**
          * {@code "layers"}
          */
-        public static final String LAYERS = "layers";
+        public static final CharSequence LAYERS = HttpHeaders.newEntity("layers");
         /**
          * {@code "max-age"}
          */
-        public static final String MAX_AGE = HttpHeaders.Values.MAX_AGE;
+        public static final CharSequence MAX_AGE = HttpHeaders.Values.MAX_AGE;
         /**
          * {@code "max-stale"}
          */
-        public static final String MAX_STALE = HttpHeaders.Values.MAX_STALE;
+        public static final CharSequence MAX_STALE = HttpHeaders.Values.MAX_STALE;
         /**
          * {@code "min-fresh"}
          */
-        public static final String MIN_FRESH = HttpHeaders.Values.MIN_FRESH;
+        public static final CharSequence MIN_FRESH = HttpHeaders.Values.MIN_FRESH;
         /**
          * {@code "mode"}
          */
-        public static final String MODE = "mode";
+        public static final CharSequence MODE = HttpHeaders.newEntity("mode");
         /**
          * {@code "multicast"}
          */
-        public static final String MULTICAST = "multicast";
+        public static final CharSequence MULTICAST = HttpHeaders.newEntity("multicast");
         /**
          * {@code "must-revalidate"}
          */
-        public static final String MUST_REVALIDATE = HttpHeaders.Values.MUST_REVALIDATE;
+        public static final CharSequence MUST_REVALIDATE = HttpHeaders.Values.MUST_REVALIDATE;
         /**
          * {@code "none"}
          */
-        public static final String NONE = HttpHeaders.Values.NONE;
+        public static final CharSequence NONE = HttpHeaders.Values.NONE;
         /**
          * {@code "no-cache"}
          */
-        public static final String NO_CACHE = HttpHeaders.Values.NO_CACHE;
+        public static final CharSequence NO_CACHE = HttpHeaders.Values.NO_CACHE;
         /**
          * {@code "no-transform"}
          */
-        public static final String NO_TRANSFORM = HttpHeaders.Values.NO_TRANSFORM;
+        public static final CharSequence NO_TRANSFORM = HttpHeaders.Values.NO_TRANSFORM;
         /**
          * {@code "only-if-cached"}
          */
-        public static final String ONLY_IF_CACHED = HttpHeaders.Values.ONLY_IF_CACHED;
+        public static final CharSequence ONLY_IF_CACHED = HttpHeaders.Values.ONLY_IF_CACHED;
         /**
          * {@code "port"}
          */
-        public static final String PORT = "port";
+        public static final CharSequence PORT = HttpHeaders.newEntity("port");
         /**
          * {@code "private"}
          */
-        public static final String PRIVATE = HttpHeaders.Values.PRIVATE;
+        public static final CharSequence PRIVATE = HttpHeaders.Values.PRIVATE;
         /**
          * {@code "proxy-revalidate"}
          */
-        public static final String PROXY_REVALIDATE = HttpHeaders.Values.PROXY_REVALIDATE;
+        public static final CharSequence PROXY_REVALIDATE = HttpHeaders.Values.PROXY_REVALIDATE;
         /**
          * {@code "public"}
          */
-        public static final String PUBLIC = HttpHeaders.Values.PUBLIC;
+        public static final CharSequence PUBLIC = HttpHeaders.Values.PUBLIC;
         /**
          * {@code "RTP"}
          */
-        public static final String RTP = "RTP";
+        public static final CharSequence RTP = HttpHeaders.newEntity("RTP");
         /**
          * {@code "rtptime"}
          */
-        public static final String RTPTIME = "rtptime";
+        public static final CharSequence RTPTIME = HttpHeaders.newEntity("rtptime");
         /**
          * {@code "seq"}
          */
-        public static final String SEQ = "seq";
+        public static final CharSequence SEQ = HttpHeaders.newEntity("seq");
         /**
          * {@code "server_port"}
          */
-        public static final String SERVER_PORT = "server_port";
+        public static final CharSequence SERVER_PORT = HttpHeaders.newEntity("server_port");
         /**
          * {@code "ssrc"}
          */
-        public static final String SSRC = "ssrc";
+        public static final CharSequence SSRC = HttpHeaders.newEntity("ssrc");
         /**
          * {@code "TCP"}
          */
-        public static final String TCP = "TCP";
+        public static final CharSequence TCP = HttpHeaders.newEntity("TCP");
         /**
          * {@code "time"}
          */
-        public static final String TIME = "time";
+        public static final CharSequence TIME = HttpHeaders.newEntity("time");
         /**
          * {@code "timeout"}
          */
-        public static final String TIMEOUT = "timeout";
+        public static final CharSequence TIMEOUT = HttpHeaders.newEntity("timeout");
         /**
          * {@code "ttl"}
          */
-        public static final String TTL = "ttl";
+        public static final CharSequence TTL = HttpHeaders.newEntity("ttl");
         /**
          * {@code "UDP"}
          */
-        public static final String UDP = "UDP";
+        public static final CharSequence UDP = HttpHeaders.newEntity("UDP");
         /**
          * {@code "unicast"}
          */
-        public static final String UNICAST = "unicast";
+        public static final CharSequence UNICAST = HttpHeaders.newEntity("unicast");
         /**
          * {@code "url"}
          */
-        public static final String URL = "url";
+        public static final CharSequence URL = HttpHeaders.newEntity("url");
 
         private Values() { }
     }

@@ -18,13 +18,13 @@ package io.netty.handler.codec.http;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 
-public final class HttpHeaderCharsequence implements CharSequence {
+final class HttpHeaderEntity implements CharSequence {
 
     private final String name;
     private final int hash;
     private final byte[] bytes;
 
-    public HttpHeaderCharsequence(String name) {
+    public HttpHeaderEntity(String name) {
         this.name = name;
         hash = HttpHeaders.hash(name);
         bytes = name.getBytes(CharsetUtil.US_ASCII);
@@ -46,7 +46,7 @@ public final class HttpHeaderCharsequence implements CharSequence {
 
     @Override
     public CharSequence subSequence(int start, int end) {
-        return new HttpHeaderCharsequence(name.substring(start, end));
+        return new HttpHeaderEntity(name.substring(start, end));
     }
 
     @Override

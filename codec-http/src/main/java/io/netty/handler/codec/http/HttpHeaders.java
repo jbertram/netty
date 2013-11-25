@@ -114,303 +114,302 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
         /**
          * {@code "Accept"}
          */
-        public static final CharSequence ACCEPT = new HttpHeaderCharsequence("Accept");
+        public static final CharSequence ACCEPT = new HttpHeaderEntity("Accept");
         /**
          * {@code "Accept-Charset"}
          */
-        public static final CharSequence ACCEPT_CHARSET = new HttpHeaderCharsequence("Accept-Charset");
+        public static final CharSequence ACCEPT_CHARSET = new HttpHeaderEntity("Accept-Charset");
         /**
          * {@code "Accept-Encoding"}
          */
-        public static final CharSequence ACCEPT_ENCODING = new HttpHeaderCharsequence("Accept-Encoding");
+        public static final CharSequence ACCEPT_ENCODING = new HttpHeaderEntity("Accept-Encoding");
         /**
          * {@code "Accept-Language"}
          */
-        public static final CharSequence ACCEPT_LANGUAGE = new HttpHeaderCharsequence("Accept-Language");
+        public static final CharSequence ACCEPT_LANGUAGE = new HttpHeaderEntity("Accept-Language");
         /**
          * {@code "Accept-Ranges"}
          */
-        public static final CharSequence ACCEPT_RANGES = new HttpHeaderCharsequence("Accept-Ranges");
+        public static final CharSequence ACCEPT_RANGES = new HttpHeaderEntity("Accept-Ranges");
         /**
          * {@code "Accept-Patch"}
          */
-        public static final CharSequence ACCEPT_PATCH = new HttpHeaderCharsequence("Accept-Patch");
+        public static final CharSequence ACCEPT_PATCH = new HttpHeaderEntity("Accept-Patch");
         /**
          * {@code "Access-Control-Allow-Credentials"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_CREDENTIALS =
-                new HttpHeaderCharsequence("Access-Control-Allow-Credentials");
+                new HttpHeaderEntity("Access-Control-Allow-Credentials");
         /**
          * {@code "Access-Control-Allow-Headers"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_HEADERS =
-                new HttpHeaderCharsequence("Access-Control-Allow-Headers");
+                new HttpHeaderEntity("Access-Control-Allow-Headers");
         /**
          * {@code "Access-Control-Allow-Methods"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_METHODS =
-                new HttpHeaderCharsequence("Access-Control-Allow-Methods");
+                new HttpHeaderEntity("Access-Control-Allow-Methods");
         /**
          * {@code "Access-Control-Allow-Origin"}
          */
         public static final CharSequence ACCESS_CONTROL_ALLOW_ORIGIN =
-                new HttpHeaderCharsequence("Access-Control-Allow-Origin");
+                new HttpHeaderEntity("Access-Control-Allow-Origin");
         /**
          * {@code "Access-Control-Expose-Headers"}
          */
         public static final CharSequence ACCESS_CONTROL_EXPOSE_HEADERS =
-                new HttpHeaderCharsequence("Access-Control-Expose-Headers");
+                new HttpHeaderEntity("Access-Control-Expose-Headers");
         /**
          * {@code "Access-Control-Max-Age"}
          */
-        public static final CharSequence ACCESS_CONTROL_MAX_AGE = new HttpHeaderCharsequence("Access-Control-Max-Age");
+        public static final CharSequence ACCESS_CONTROL_MAX_AGE = new HttpHeaderEntity("Access-Control-Max-Age");
         /**
          * {@code "Access-Control-Request-Headers"}
          */
         public static final CharSequence ACCESS_CONTROL_REQUEST_HEADERS =
-                new HttpHeaderCharsequence("Access-Control-Request-Headers");
+                new HttpHeaderEntity("Access-Control-Request-Headers");
         /**
          * {@code "Access-Control-Request-Method"}
          */
         public static final CharSequence ACCESS_CONTROL_REQUEST_METHOD =
-                new HttpHeaderCharsequence("Access-Control-Request-Method");
+                new HttpHeaderEntity("Access-Control-Request-Method");
         /**
          * {@code "Age"}
          */
-        public static final CharSequence AGE = new HttpHeaderCharsequence("Age");
+        public static final CharSequence AGE = newEntity("Age");
         /**
          * {@code "Allow"}
          */
-        public static final CharSequence ALLOW = new HttpHeaderCharsequence("Allow");
+        public static final CharSequence ALLOW = newEntity("Allow");
         /**
          * {@code "Authorization"}
          */
-        public static final CharSequence AUTHORIZATION = new HttpHeaderCharsequence("Authorization");
+        public static final CharSequence AUTHORIZATION = newEntity("Authorization");
         /**
          * {@code "Cache-Control"}
          */
-        public static final CharSequence CACHE_CONTROL = new HttpHeaderCharsequence("Cache-Control");
+        public static final CharSequence CACHE_CONTROL = newEntity("Cache-Control");
         /**
          * {@code "Connection"}
          */
-        public static final CharSequence CONNECTION = new HttpHeaderCharsequence("Connection");
+        public static final CharSequence CONNECTION = newEntity("Connection");
         /**
          * {@code "Content-Base"}
          */
-        public static final CharSequence CONTENT_BASE = new HttpHeaderCharsequence("Content-Base");
+        public static final CharSequence CONTENT_BASE = newEntity("Content-Base");
         /**
          * {@code "Content-Encoding"}
          */
-        public static final CharSequence CONTENT_ENCODING = new HttpHeaderCharsequence("Content-Encoding");
+        public static final CharSequence CONTENT_ENCODING = newEntity("Content-Encoding");
         /**
          * {@code "Content-Language"}
          */
-        public static final CharSequence CONTENT_LANGUAGE = new HttpHeaderCharsequence("Content-Language");
+        public static final CharSequence CONTENT_LANGUAGE = newEntity("Content-Language");
         /**
          * {@code "Content-Length"}
          */
-        public static final CharSequence CONTENT_LENGTH = new HttpHeaderCharsequence("Content-Length");
+        public static final CharSequence CONTENT_LENGTH = newEntity("Content-Length");
         /**
          * {@code "Content-Location"}
          */
-        public static final CharSequence CONTENT_LOCATION = new HttpHeaderCharsequence("Content-Location");
+        public static final CharSequence CONTENT_LOCATION = newEntity("Content-Location");
         /**
          * {@code "Content-Transfer-Encoding"}
          */
-        public static final CharSequence CONTENT_TRANSFER_ENCODING =
-                new HttpHeaderCharsequence("Content-Transfer-Encoding");
+        public static final CharSequence CONTENT_TRANSFER_ENCODING = newEntity("Content-Transfer-Encoding");
         /**
          * {@code "Content-MD5"}
          */
-        public static final CharSequence CONTENT_MD5 = new HttpHeaderCharsequence("Content-MD5");
+        public static final CharSequence CONTENT_MD5 = newEntity("Content-MD5");
         /**
          * {@code "Content-Range"}
          */
-        public static final CharSequence CONTENT_RANGE = new HttpHeaderCharsequence("Content-Range");
+        public static final CharSequence CONTENT_RANGE = newEntity("Content-Range");
         /**
          * {@code "Content-Type"}
          */
-        public static final CharSequence CONTENT_TYPE = new HttpHeaderCharsequence("Content-Type");
+        public static final CharSequence CONTENT_TYPE = newEntity("Content-Type");
         /**
          * {@code "Cookie"}
          */
-        public static final CharSequence COOKIE = new HttpHeaderCharsequence("Cookie");
+        public static final CharSequence COOKIE = newEntity("Cookie");
         /**
          * {@code "Date"}
          */
-        public static final CharSequence DATE = new HttpHeaderCharsequence("Date");
+        public static final CharSequence DATE = newEntity("Date");
         /**
          * {@code "ETag"}
          */
-        public static final CharSequence ETAG = new HttpHeaderCharsequence("ETag");
+        public static final CharSequence ETAG = newEntity("ETag");
         /**
          * {@code "Expect"}
          */
-        public static final CharSequence EXPECT = new HttpHeaderCharsequence("Expect");
+        public static final CharSequence EXPECT = newEntity("Expect");
         /**
          * {@code "Expires"}
          */
-        public static final CharSequence EXPIRES = new HttpHeaderCharsequence("Expires");
+        public static final CharSequence EXPIRES = newEntity("Expires");
         /**
          * {@code "From"}
          */
-        public static final CharSequence FROM = new HttpHeaderCharsequence("From");
+        public static final CharSequence FROM = newEntity("From");
         /**
          * {@code "Host"}
          */
-        public static final CharSequence HOST = new HttpHeaderCharsequence("Host");
+        public static final CharSequence HOST = newEntity("Host");
         /**
          * {@code "If-Match"}
          */
-        public static final CharSequence IF_MATCH = new HttpHeaderCharsequence("If-Match");
+        public static final CharSequence IF_MATCH = newEntity("If-Match");
         /**
          * {@code "If-Modified-Since"}
          */
-        public static final CharSequence IF_MODIFIED_SINCE = new HttpHeaderCharsequence("If-Modified-Since");
+        public static final CharSequence IF_MODIFIED_SINCE = newEntity("If-Modified-Since");
         /**
          * {@code "If-None-Match"}
          */
-        public static final CharSequence IF_NONE_MATCH = new HttpHeaderCharsequence("If-None-Match");
+        public static final CharSequence IF_NONE_MATCH = newEntity("If-None-Match");
         /**
          * {@code "If-Range"}
          */
-        public static final CharSequence IF_RANGE = new HttpHeaderCharsequence("If-Range");
+        public static final CharSequence IF_RANGE = newEntity("If-Range");
         /**
          * {@code "If-Unmodified-Since"}
          */
-        public static final CharSequence IF_UNMODIFIED_SINCE = new HttpHeaderCharsequence("If-Unmodified-Since");
+        public static final CharSequence IF_UNMODIFIED_SINCE = newEntity("If-Unmodified-Since");
         /**
          * {@code "Last-Modified"}
          */
-        public static final CharSequence LAST_MODIFIED = new HttpHeaderCharsequence("Last-Modified");
+        public static final CharSequence LAST_MODIFIED = newEntity("Last-Modified");
         /**
          * {@code "Location"}
          */
-        public static final CharSequence LOCATION = new HttpHeaderCharsequence("Location");
+        public static final CharSequence LOCATION = newEntity("Location");
         /**
          * {@code "Max-Forwards"}
          */
-        public static final CharSequence MAX_FORWARDS = new HttpHeaderCharsequence("Max-Forwards");
+        public static final CharSequence MAX_FORWARDS = newEntity("Max-Forwards");
         /**
          * {@code "Origin"}
          */
-        public static final CharSequence ORIGIN = new HttpHeaderCharsequence("Origin");
+        public static final CharSequence ORIGIN = newEntity("Origin");
         /**
          * {@code "Pragma"}
          */
-        public static final CharSequence PRAGMA = new HttpHeaderCharsequence("Pragma");
+        public static final CharSequence PRAGMA = newEntity("Pragma");
         /**
          * {@code "Proxy-Authenticate"}
          */
-        public static final CharSequence PROXY_AUTHENTICATE = new HttpHeaderCharsequence("Proxy-Authenticate");
+        public static final CharSequence PROXY_AUTHENTICATE = newEntity("Proxy-Authenticate");
         /**
          * {@code "Proxy-Authorization"}
          */
-        public static final CharSequence PROXY_AUTHORIZATION = new HttpHeaderCharsequence("Proxy-Authorization");
+        public static final CharSequence PROXY_AUTHORIZATION = newEntity("Proxy-Authorization");
         /**
          * {@code "Range"}
          */
-        public static final CharSequence RANGE = new HttpHeaderCharsequence("Range");
+        public static final CharSequence RANGE = newEntity("Range");
         /**
          * {@code "Referer"}
          */
-        public static final CharSequence REFERER = new HttpHeaderCharsequence("Referer");
+        public static final CharSequence REFERER = newEntity("Referer");
         /**
          * {@code "Retry-After"}
          */
-        public static final CharSequence RETRY_AFTER = new HttpHeaderCharsequence("Retry-After");
+        public static final CharSequence RETRY_AFTER = newEntity("Retry-After");
         /**
          * {@code "Sec-WebSocket-Key1"}
          */
-        public static final CharSequence SEC_WEBSOCKET_KEY1 = new HttpHeaderCharsequence("Sec-WebSocket-Key1");
+        public static final CharSequence SEC_WEBSOCKET_KEY1 = newEntity("Sec-WebSocket-Key1");
         /**
          * {@code "Sec-WebSocket-Key2"}
          */
-        public static final CharSequence SEC_WEBSOCKET_KEY2 = new HttpHeaderCharsequence("Sec-WebSocket-Key2");
+        public static final CharSequence SEC_WEBSOCKET_KEY2 = newEntity("Sec-WebSocket-Key2");
         /**
          * {@code "Sec-WebSocket-Location"}
          */
-        public static final CharSequence SEC_WEBSOCKET_LOCATION = new HttpHeaderCharsequence("Sec-WebSocket-Location");
+        public static final CharSequence SEC_WEBSOCKET_LOCATION = newEntity("Sec-WebSocket-Location");
         /**
          * {@code "Sec-WebSocket-Origin"}
          */
-        public static final CharSequence SEC_WEBSOCKET_ORIGIN = new HttpHeaderCharsequence("Sec-WebSocket-Origin");
+        public static final CharSequence SEC_WEBSOCKET_ORIGIN = newEntity("Sec-WebSocket-Origin");
         /**
          * {@code "Sec-WebSocket-Protocol"}
          */
-        public static final CharSequence SEC_WEBSOCKET_PROTOCOL = new HttpHeaderCharsequence("Sec-WebSocket-Protocol");
+        public static final CharSequence SEC_WEBSOCKET_PROTOCOL = newEntity("Sec-WebSocket-Protocol");
         /**
          * {@code "Sec-WebSocket-Version"}
          */
-        public static final CharSequence SEC_WEBSOCKET_VERSION = new HttpHeaderCharsequence("Sec-WebSocket-Version");
+        public static final CharSequence SEC_WEBSOCKET_VERSION = newEntity("Sec-WebSocket-Version");
         /**
          * {@code "Sec-WebSocket-Key"}
          */
-        public static final CharSequence SEC_WEBSOCKET_KEY = new HttpHeaderCharsequence("Sec-WebSocket-Key");
+        public static final CharSequence SEC_WEBSOCKET_KEY = newEntity("Sec-WebSocket-Key");
         /**
          * {@code "Sec-WebSocket-Accept"}
          */
-        public static final CharSequence SEC_WEBSOCKET_ACCEPT = new HttpHeaderCharsequence("Sec-WebSocket-Accept");
+        public static final CharSequence SEC_WEBSOCKET_ACCEPT = newEntity("Sec-WebSocket-Accept");
         /**
          * {@code "Server"}
          */
-        public static final CharSequence SERVER = new HttpHeaderCharsequence("Server");
+        public static final CharSequence SERVER = newEntity("Server");
         /**
          * {@code "Set-Cookie"}
          */
-        public static final CharSequence SET_COOKIE = new HttpHeaderCharsequence("Set-Cookie");
+        public static final CharSequence SET_COOKIE = newEntity("Set-Cookie");
         /**
          * {@code "Set-Cookie2"}
          */
-        public static final CharSequence SET_COOKIE2 = new HttpHeaderCharsequence("Set-Cookie2");
+        public static final CharSequence SET_COOKIE2 = newEntity("Set-Cookie2");
         /**
          * {@code "TE"}
          */
-        public static final CharSequence TE = new HttpHeaderCharsequence("TE");
+        public static final CharSequence TE = newEntity("TE");
         /**
          * {@code "Trailer"}
          */
-        public static final CharSequence TRAILER = new HttpHeaderCharsequence("Trailer");
+        public static final CharSequence TRAILER = newEntity("Trailer");
         /**
          * {@code "Transfer-Encoding"}
          */
-        public static final CharSequence TRANSFER_ENCODING = new HttpHeaderCharsequence("Transfer-Encoding");
+        public static final CharSequence TRANSFER_ENCODING = newEntity("Transfer-Encoding");
         /**
          * {@code "Upgrade"}
          */
-        public static final CharSequence UPGRADE = new HttpHeaderCharsequence("Upgrade");
+        public static final CharSequence UPGRADE = newEntity("Upgrade");
         /**
          * {@code "User-Agent"}
          */
-        public static final CharSequence USER_AGENT = new HttpHeaderCharsequence("User-Agent");
+        public static final CharSequence USER_AGENT = newEntity("User-Agent");
         /**
          * {@code "Vary"}
          */
-        public static final CharSequence VARY = new HttpHeaderCharsequence("Vary");
+        public static final CharSequence VARY = newEntity("Vary");
         /**
          * {@code "Via"}
          */
-        public static final CharSequence VIA = new HttpHeaderCharsequence("Via");
+        public static final CharSequence VIA = newEntity("Via");
         /**
          * {@code "Warning"}
          */
-        public static final CharSequence WARNING = new HttpHeaderCharsequence("Warning");
+        public static final CharSequence WARNING = newEntity("Warning");
         /**
          * {@code "WebSocket-Location"}
          */
-        public static final CharSequence WEBSOCKET_LOCATION = new HttpHeaderCharsequence("WebSocket-Location");
+        public static final CharSequence WEBSOCKET_LOCATION = newEntity("WebSocket-Location");
         /**
          * {@code "WebSocket-Origin"}
          */
-        public static final CharSequence WEBSOCKET_ORIGIN = new HttpHeaderCharsequence("WebSocket-Origin");
+        public static final CharSequence WEBSOCKET_ORIGIN = newEntity("WebSocket-Origin");
         /**
          * {@code "WebSocket-Protocol"}
          */
-        public static final CharSequence WEBSOCKET_PROTOCOL = new HttpHeaderCharsequence("WebSocket-Protocol");
+        public static final CharSequence WEBSOCKET_PROTOCOL = newEntity("WebSocket-Protocol");
         /**
          * {@code "WWW-Authenticate"}
          */
-        public static final CharSequence WWW_AUTHENTICATE = new HttpHeaderCharsequence("WWW-Authenticate");
+        public static final CharSequence WWW_AUTHENTICATE = newEntity("WWW-Authenticate");
 
         private Names() {
         }
@@ -423,132 +422,132 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
         /**
          * {@code "application/x-www-form-urlencoded"}
          */
-         public static final String APPLICATION_X_WWW_FORM_URLENCODED =
-             "application/x-www-form-urlencoded";
+         public static final CharSequence APPLICATION_X_WWW_FORM_URLENCODED =
+                newEntity("application/x-www-form-urlencoded");
         /**
          * {@code "base64"}
          */
-        public static final String BASE64 = "base64";
+        public static final CharSequence BASE64 = newEntity("base64");
         /**
          * {@code "binary"}
          */
-        public static final String BINARY = "binary";
+        public static final CharSequence BINARY = newEntity("binary");
         /**
          * {@code "boundary"}
          */
-        public static final String BOUNDARY = "boundary";
+        public static final CharSequence BOUNDARY = newEntity("boundary");
         /**
          * {@code "bytes"}
          */
-        public static final String BYTES = "bytes";
+        public static final CharSequence BYTES = newEntity("bytes");
         /**
          * {@code "charset"}
          */
-        public static final String CHARSET = "charset";
+        public static final CharSequence CHARSET = newEntity("charset");
         /**
          * {@code "chunked"}
          */
-        public static final String CHUNKED = "chunked";
+        public static final CharSequence CHUNKED = newEntity("chunked");
         /**
          * {@code "close"}
          */
-        public static final String CLOSE = "close";
+        public static final CharSequence CLOSE = newEntity("close");
         /**
          * {@code "compress"}
          */
-        public static final String COMPRESS = "compress";
+        public static final CharSequence COMPRESS = newEntity("compress");
         /**
          * {@code "100-continue"}
          */
-        public static final String CONTINUE =  "100-continue";
+        public static final CharSequence CONTINUE =  newEntity("100-continue");
         /**
          * {@code "deflate"}
          */
-        public static final String DEFLATE = "deflate";
+        public static final CharSequence DEFLATE = newEntity("deflate");
         /**
          * {@code "gzip"}
          */
-        public static final String GZIP = "gzip";
+        public static final CharSequence GZIP = newEntity("gzip");
         /**
          * {@code "identity"}
          */
-        public static final String IDENTITY = "identity";
+        public static final CharSequence IDENTITY = newEntity("identity");
         /**
          * {@code "keep-alive"}
          */
-        public static final String KEEP_ALIVE = "keep-alive";
+        public static final CharSequence KEEP_ALIVE = newEntity("keep-alive");
         /**
          * {@code "max-age"}
          */
-        public static final String MAX_AGE = "max-age";
+        public static final CharSequence MAX_AGE = newEntity("max-age");
         /**
          * {@code "max-stale"}
          */
-        public static final String MAX_STALE = "max-stale";
+        public static final CharSequence MAX_STALE = newEntity("max-stale");
         /**
          * {@code "min-fresh"}
          */
-        public static final String MIN_FRESH = "min-fresh";
+        public static final CharSequence MIN_FRESH = newEntity("min-fresh");
         /**
          * {@code "multipart/form-data"}
          */
-        public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+        public static final CharSequence MULTIPART_FORM_DATA = newEntity("multipart/form-data");
         /**
          * {@code "must-revalidate"}
          */
-        public static final String MUST_REVALIDATE = "must-revalidate";
+        public static final CharSequence MUST_REVALIDATE = newEntity("must-revalidate");
         /**
          * {@code "no-cache"}
          */
-        public static final String NO_CACHE = "no-cache";
+        public static final CharSequence NO_CACHE = newEntity("no-cache");
         /**
          * {@code "no-store"}
          */
-        public static final String NO_STORE = "no-store";
+        public static final CharSequence NO_STORE = newEntity("no-store");
         /**
          * {@code "no-transform"}
          */
-        public static final String NO_TRANSFORM = "no-transform";
+        public static final CharSequence NO_TRANSFORM = newEntity("no-transform");
         /**
          * {@code "none"}
          */
-        public static final String NONE = "none";
+        public static final CharSequence NONE = newEntity("none");
         /**
          * {@code "only-if-cached"}
          */
-        public static final String ONLY_IF_CACHED = "only-if-cached";
+        public static final CharSequence ONLY_IF_CACHED = newEntity("only-if-cached");
         /**
          * {@code "private"}
          */
-        public static final String PRIVATE = "private";
+        public static final CharSequence PRIVATE = newEntity("private");
         /**
          * {@code "proxy-revalidate"}
          */
-        public static final String PROXY_REVALIDATE = "proxy-revalidate";
+        public static final CharSequence PROXY_REVALIDATE = newEntity("proxy-revalidate");
         /**
          * {@code "public"}
          */
-        public static final String PUBLIC = "public";
+        public static final CharSequence PUBLIC = newEntity("public");
         /**
          * {@code "quoted-printable"}
          */
-        public static final String QUOTED_PRINTABLE = "quoted-printable";
+        public static final CharSequence QUOTED_PRINTABLE = newEntity("quoted-printable");
         /**
          * {@code "s-maxage"}
          */
-        public static final String S_MAXAGE = "s-maxage";
+        public static final CharSequence S_MAXAGE = newEntity("s-maxage");
         /**
          * {@code "trailers"}
          */
-        public static final String TRAILERS = "trailers";
+        public static final CharSequence TRAILERS = newEntity("trailers");
         /**
          * {@code "Upgrade"}
          */
-        public static final String UPGRADE = "Upgrade";
+        public static final CharSequence UPGRADE = newEntity("Upgrade");
         /**
          * {@code "WebSocket"}
          */
-        public static final String WEBSOCKET = "WebSocket";
+        public static final CharSequence WEBSOCKET = newEntity("WebSocket");
 
         private Values() {
         }
@@ -1201,8 +1200,8 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
     }
 
     static int hash(CharSequence name) {
-        if (name instanceof HttpHeaderCharsequence) {
-            return ((HttpHeaderCharsequence) name).hash();
+        if (name instanceof HttpHeaderEntity) {
+            return ((HttpHeaderEntity) name).hash();
         }
         int h = 0;
         for (int i = name.length() - 1; i >= 0; i --) {
@@ -1240,14 +1239,25 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
     }
 
     public static void encodeAscii(CharSequence seq, ByteBuf buf) {
-        if (seq instanceof HttpHeaderCharsequence) {
-            ((HttpHeaderCharsequence) seq).encode(buf);
+        if (seq instanceof HttpHeaderEntity) {
+            ((HttpHeaderEntity) seq).encode(buf);
         } else {
             int length = seq.length();
             for (int i = 0 ; i < length; i++) {
                 buf.writeByte((byte) seq.charAt(i));
             }
         }
+    }
+
+    /**
+     * Create a new {@link CharSequence} which is optimized for reuse as {@link HttpHeaders} name or value.
+     * So if you have a Header name or value that you want to reuse you should make use of this.
+     */
+    public static CharSequence newEntity(String name) {
+        if (name == null) {
+            throw new NullPointerException("name");
+        }
+        return new HttpHeaderEntity(name);
     }
 
     protected HttpHeaders() { }
@@ -1422,7 +1432,7 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
      * @param ignoreCaseValue   {@code true} if case should be ignored
      * @return contains         {@code true} if it contains it {@code false} otherwise
      */
-    public boolean contains(CharSequence name, String value, boolean ignoreCaseValue) {
+    public boolean contains(CharSequence name, CharSequence value, boolean ignoreCaseValue) {
         List<String> values = getAll(name);
         if (values.isEmpty()) {
             return false;
