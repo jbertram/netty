@@ -23,7 +23,6 @@ import io.netty.util.CharsetUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import static io.netty.buffer.Unpooled.*;
 import static io.netty.handler.codec.http.HttpConstants.*;
@@ -45,7 +44,6 @@ public abstract class HttpObjectEncoder<H extends HttpMessage> extends MessageTo
     private static final byte[] CRLF = { CR, LF };
     private static final byte[] ZERO_CRLF = { '0', CR, LF };
     private static final byte[] ZERO_CRLF_CRLF = { '0', CR, LF, CR, LF };
-    private static final byte[] HEADER_SEPARATOR = { COLON, SP };
     private static final ByteBuf CRLF_BUF = unreleasableBuffer(directBuffer(CRLF.length).writeBytes(CRLF));
     private static final ByteBuf ZERO_CRLF_CRLF_BUF = unreleasableBuffer(directBuffer(ZERO_CRLF_CRLF.length)
             .writeBytes(ZERO_CRLF_CRLF));

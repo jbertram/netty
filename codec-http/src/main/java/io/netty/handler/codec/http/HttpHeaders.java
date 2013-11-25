@@ -1242,10 +1242,14 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
         if (seq instanceof HttpHeaderEntity) {
             ((HttpHeaderEntity) seq).encode(buf);
         } else {
-            int length = seq.length();
-            for (int i = 0 ; i < length; i++) {
-                buf.writeByte((byte) seq.charAt(i));
-            }
+            encodeAscii0(seq, buf);
+        }
+    }
+
+    static void encodeAscii0(CharSequence seq, ByteBuf buf) {
+        int length = seq.length();
+        for (int i = 0 ; i < length; i++) {
+            buf.writeByte((byte) seq.charAt(i));
         }
     }
 
